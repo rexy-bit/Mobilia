@@ -13,7 +13,7 @@ const vehiculeSchema = new mongoose.Schema({
         minLength : 1,
         maxLength : 100,
     },
-    categorie : {
+    category:{
         type : String,
         required: [true, "categorie is required"],
         enum : ["Standard", "SUV", "Luxury", "Utility", "Electric"],
@@ -49,6 +49,13 @@ const vehiculeSchema = new mongoose.Schema({
         type : String,
         required : [true, "type of transmission is required"],
         enum : ["Auto", "Manual"]
+    },
+    year : {
+           type : Number,
+           required : [true, "year is required"],
+           min : 1950,
+           max : new Date().getFullYear() + 1
+
     },
     description: {
         type : String,

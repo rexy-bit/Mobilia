@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import { PORT } from "./config/env.js";
 import connectToDatabase from "./database/mongodb.js";
 import authRouter from "./routes/auth.routes.js";
+import userRouter from "./routes/user.routes.js";
+import vehiculeRouter from "./routes/vehicule.routes.js";
 
 
 const app = express();
@@ -19,6 +21,10 @@ app.use(express.urlencoded({extended : true}));
 
 
 app.use('/api/v1/auth', authRouter);
+app.use('/api/V1/users', userRouter);
+app.use('/api/v1/vehicules', vehiculeRouter);
+
+
 app.get('/', (req, res)=>res.send("Welcome to mobilia"));
 
 

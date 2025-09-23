@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { refreshTokenFunction, signIn, signOut, signUp } from "../controllers/auth.controller.js";
+import authorize from "../middlewares/auth.middleware.js";
 
 
 

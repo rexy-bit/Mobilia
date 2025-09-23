@@ -229,7 +229,13 @@ export const refreshTokenFunction = async(req , res , next) => {
 
         res.status(200).json({
             success: true,
-            message : 'Token refreshed'
+            message : 'Token refreshed',
+            data : {
+                _id : user._id,
+                name : user.name,
+                email : user.email,
+                role: user.role
+            }
         });
 
 
