@@ -21,6 +21,12 @@ const reservationSchema = new mongoose.Schema({
         type : String,
         required : [true, "userName is required"]
     },
+    phoneNumber : {
+        type : String,
+        required : [true, "user phone number is required"],
+        
+    }
+    ,
     startDate : {
         type : Date,
         required : [true, "stateDate is required"],

@@ -14,6 +14,8 @@ interface VehiculesContextType{
     loadingVehicules : boolean;
     filterData: FilterType;
     setFilterData : (f : FilterType) => void;
+    vehiculeDetails : Vehicule | null;
+    getVehicule : (id : string)=>Promise<void>
    
 }
 
@@ -35,6 +37,10 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
             fuelType : ""
         }
     });
+
+    const [vehiculeDetails, setVehiculeDetails] = useState<Vehicule | null>(null);
+
+
 
     useEffect(()=>{
         localStorage.setItem('filterData', JSON.stringify(filterData));
@@ -73,6 +79,35 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
         }
     }
 
+    const getVehicule = async(id : string) => {
+
+        try{
+            setLoadingVehicules(true);
+
+            const res = await fetch(`http://localhost:5000/api/v1/vehicules/vehicule/${id}`, {
+                method : "GET",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+            
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                setError(data.error || data.message || "Error in getting vehicule");
+                return;
+            }
+
+            setError(null);
+            setVehiculeDetails(data.data);
+        }catch(err){
+            console.error(err);
+        }finally{
+            setLoadingVehicules(false);
+        }
+    }
+
 
 
 
@@ -83,7 +118,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
    
 
     return(
-        <VehiculesContext.Provider value={{vehicules, error, getVehicules, loadingVehicules, filterData, setFilterData}}>
+        <VehiculesContext.Provider value={{vehicules, error, getVehicules, loadingVehicules, filterData, setFilterData, getVehicule, vehiculeDetails}}>
             {children}
         </VehiculesContext.Provider>
     );

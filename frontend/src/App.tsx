@@ -7,6 +7,10 @@ import Home from './Pages/Home'
 import Header from './Components/HomeComponents/Header'
 import Vehicules from './Pages/Vehicules'
 import Account from './Pages/Account'
+import Discover from './Pages/Discover'
+import Reservation from './Pages/Reservation'
+import { ReservationProvider } from './Contexts/ReservationContext'
+import Reservations from './Pages/Reservations'
 
 function App() {
 
@@ -14,6 +18,7 @@ function App() {
   return (
    <AuthProvider>
      <VehiculesProvider>
+      <ReservationProvider>
     <Routes>
  
         <Route path='/' element={
@@ -38,7 +43,29 @@ function App() {
        
           </>
          }/>
+
+         <Route path='/discover/:id' element={
+          <>
+            <Header/>
+            <Discover/>
+          </>
+         }/>
+
+         <Route path='/reservation/:id' element={
+          <>
+            <Header/>
+            <Reservation/> 
+          </>
+         }/>
+
+         <Route path='/reservations' element={
+          <>
+            <Header/>
+            <Reservations/>
+          </>
+         }/>
     </Routes>
+      </ReservationProvider>
     </VehiculesProvider>
     </AuthProvider>
   )

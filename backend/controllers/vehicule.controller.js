@@ -48,3 +48,29 @@ export const getVehicules = async(req , res, next) => {
         next(err);
     }
 }
+
+
+export const getVehicule = async(req , res , next) => {
+
+    try{
+
+        const vehiculeId = req.params.id;
+
+        const vehicule = await Vehicule.findById(vehiculeId);
+
+        if(!vehicule){
+            return res.status(404).json({
+                success : false,
+                message : "Error vehicule not found"
+            });
+        }
+
+        res.status(200).json({
+            success : true,
+            data : vehicule
+        })
+
+    }catch(err){
+        next(err);
+    }
+}

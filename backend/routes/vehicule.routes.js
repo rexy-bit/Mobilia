@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getVehicules } from "../controllers/vehicule.controller.js";
+import { getVehicule, getVehicules } from "../controllers/vehicule.controller.js";
 
 
 
@@ -7,6 +7,7 @@ const vehiculeRouter = Router();
 
 vehiculeRouter.post('/', getVehicules);
 
+vehiculeRouter.get('/vehicule/:id', getVehicule);
 
 
 

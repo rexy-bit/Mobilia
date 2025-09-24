@@ -9,8 +9,8 @@ const authorize = async(req , res , next) => {
 
         let token;
 
-        if(req.cookies && req.cookies.token){
-            token = req.cookies.token;
+        if(req.cookies && req.cookies.accessToken){
+            token = req.cookies.accessToken;
         }
 
          if (!token && req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {

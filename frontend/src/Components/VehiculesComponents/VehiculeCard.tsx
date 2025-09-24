@@ -1,13 +1,15 @@
 import { memo } from "react";
 import type { Vehicule } from "../../Contexts/Types";
+import { useNavigate } from "react-router-dom";
 
 
 const VehiculeCard = ({vehicule} : {vehicule : Vehicule}) => {
 
+    const navigate = useNavigate();
 
     return(
 
-        <div className="flex flex-col items-center border-[2px] border-gray-200 rounded-lg w-[300px] h-[410px]">
+        <div className="flex flex-col items-center border-[2px] border-gray-300 rounded-lg w-[300px] h-[410px] shadow-xl">
             <h1 className="text-black font-bold text-[1.3em] mt-2">{vehicule.brand} {vehicule.model}</h1>
 
             <img src={vehicule.images[0]} alt={vehicule.model} className="h-[150px] w-[150px] object-contain "/>
@@ -18,9 +20,9 @@ const VehiculeCard = ({vehicule} : {vehicule : Vehicule}) => {
                    <div className="text-green-600 w-[100px] flex items-center justify-center font-bold">Available</div>
                </div>
                 : 
-                <div>
-                    <div><i className="fa-regular fa-clock"></i></div>
-                   <div>Reserved</div>
+                <div className="flex flex-row gap-0 h-[37px] items-center justify-center border border-orange-400">
+                    <div className="bg-orange-400 h-full flex items-center w-[40px] justify-center"><i className="fa-regular fa-clock text-white"></i></div>
+                   <div className="text-orange-400 w-[100px] flex items-center justify-center font-bold">Reserved</div>
                 </div> 
               }
             
@@ -48,8 +50,21 @@ const VehiculeCard = ({vehicule} : {vehicule : Vehicule}) => {
 
             
                  <div className="flex flex-row justify-center items-center gap-5 mt-5 mb-5">
-                    <button className="bg-white text-black border border-black w-[110px] py-2 rounded-full cursor-pointer transition-all duration-200 hover:bg-gray-100 active:bg-gray-200">Discover</button>
-                    <button className="bg-black text-white border border-black py-2 w-[110px] rounded-full cursor-pointer transition-opacity duration-200 hover:opacity-70 active:opacity-50">Reserve &#10095;</button>
+                    <button className="bg-white text-black border border-black w-[110px] py-2 rounded-full cursor-pointer transition-all duration-200 hover:bg-gray-100 active:bg-gray-200" onClick={()=>navigate(`/discover/${vehicule._id}`)}>Discover</button>
+                    {vehicule.available === false ?
+                      <button 
+                    className="bg-black text-white border border-black py-2 w-[110px] rounded-full 
+                    opacity-60
+                    "
+                   
+                    >Reserve &#10095;</button>
+                     :
+                      <button 
+                    className="bg-black text-white border border-black py-2 w-[110px] rounded-full cursor-pointer transition-opacity duration-200 hover:opacity-70 active:opacity-50"
+                    onClick={()=>navigate(`/reservation/${vehicule._id}`)}
+                    >Reserve &#10095;</button>
+                    }
+                    
                  </div>
 
         </div>

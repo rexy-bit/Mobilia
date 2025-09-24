@@ -6,6 +6,7 @@ import connectToDatabase from "./database/mongodb.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
 import vehiculeRouter from "./routes/vehicule.routes.js";
+import reservationRouter from "./routes/reservation.routes.js";
 
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(express.urlencoded({extended : true}));
 app.use('/api/v1/auth', authRouter);
 app.use('/api/V1/users', userRouter);
 app.use('/api/v1/vehicules', vehiculeRouter);
+app.use('/api/v1/reservations', reservationRouter);
 
 
 app.get('/', (req, res)=>res.send("Welcome to mobilia"));

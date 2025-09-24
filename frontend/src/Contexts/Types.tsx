@@ -32,5 +32,6 @@ export interface Reservation{
     startDate : Date;
     endDate : Date;
     totalPrice : number;
+    phoneNumber : string;
     status : string;
 }
