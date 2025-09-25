@@ -131,7 +131,7 @@ const FilterComponent = () => {
                   })}>&#10005;</div></div>
                 }
 
-                {filterData.fuelType !== "" || filterData.seats !== 0 || filterData.category !== "" || filterData.transmission !== "" && 
+                {(filterData.fuelType !== "" || filterData.seats !== 0 || filterData.category !== "" || filterData.transmission !== "") && 
                     <div className="flex flex-row justify-center items-center gap-3 bg-gray-200 px-2 py-1 rounded-[5px] font-bold cursor-pointer" onClick={()=>setFilterData({
                                   seats : 0,
             category : "",

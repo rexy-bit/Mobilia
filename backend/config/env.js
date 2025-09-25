@@ -10,6 +10,7 @@ export const {
     REFRESH_TOKEN_SECRET,
     ACCESS_TOKEN_EXPIRATION,
     REFRESH_TOKEN_EXPIRATION,
-    DB_URI
+    DB_URI,
+    RECAPTCHA_SECRET_KEY
     
 } = process.env;

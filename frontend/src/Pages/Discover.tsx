@@ -9,7 +9,7 @@ const Discover = () => {
     const {id} = useParams();
     const [currentImage, setCurrentImage] = useState<number>(0);
     const navigate = useNavigate();
-
+  
 
     const getNextSlide = () => {
         if(!vehiculeDetails) return;
@@ -96,7 +96,9 @@ const Discover = () => {
                                   <div className="flex flex-col justify-center items-center gap-5">
                                 <p className="text-[1.7em] font-bold max-[400px]:text-[1.5em]">Starts from <span className="text-orange-600">{vehiculeDetails.priceDay} Dzd</span>/Day</p>
 
-                                <button className="bg-orange-600 px-4 py-3 rounded-full font-bold cursor-pointer transition-opacity duration-300 hover:opacity-70 active:opacity-50">
+                                <button className="bg-orange-600 px-4 py-3 rounded-full font-bold cursor-pointer transition-opacity duration-300 hover:opacity-70 active:opacity-50"
+                                onClick={()=>navigate(`/reservation/${vehiculeDetails._id}`)}
+                                >
                                     Reserve &#10095;
                                 </button>
                             </div>

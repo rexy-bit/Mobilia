@@ -35,3 +35,14 @@ export interface Reservation{
     phoneNumber : string;
     status : string;
 }
+
+
+export interface Request{
+    _id : string;
+    name : string;
+    organization : string;
+    email : string;
+    phoneNumber : string;
+    description : string;
+    status : string;
+}

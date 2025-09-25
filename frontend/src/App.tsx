@@ -11,6 +11,8 @@ import Discover from './Pages/Discover'
 import Reservation from './Pages/Reservation'
 import { ReservationProvider } from './Contexts/ReservationContext'
 import Reservations from './Pages/Reservations'
+import Guide from './Pages/Guide'
+import { RequestProvider } from './Contexts/RequestContext'
 
 function App() {
 
@@ -19,6 +21,8 @@ function App() {
    <AuthProvider>
      <VehiculesProvider>
       <ReservationProvider>
+        <RequestProvider>
+        
     <Routes>
  
         <Route path='/' element={
@@ -64,7 +68,16 @@ function App() {
             <Reservations/>
           </>
          }/>
+
+         <Route path='/guide' element={
+          <>
+            <Header/>
+            <Guide/>
+          </>
+         }/>
     </Routes>
+
+         </RequestProvider>
       </ReservationProvider>
     </VehiculesProvider>
     </AuthProvider>
