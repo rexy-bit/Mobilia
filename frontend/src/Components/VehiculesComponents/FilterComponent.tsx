@@ -68,6 +68,7 @@ const FilterComponent = () => {
                 value={filterData.transmission}
                 onChange={handleChange}
                 >
+                    <option value="">All</option>
                     <option value="Auto">Auto</option>
                     <option value="Manual">Manual</option>
                 </select>
@@ -83,6 +84,7 @@ const FilterComponent = () => {
                 value={filterData.fuelType}
                 onChange={handleChange}
                 >
+                    <option value="">All</option>
                     <option value="Petrol">Petrol</option>
                     <option value="Diesel">Diesel</option>
                     <option value="Electric">Electric</option>

@@ -1,5 +1,6 @@
-import { memo , useEffect} from "react";
+import { memo ,  useState} from "react";
 import { useRequestContext } from "../../Contexts/RequestContext";
+import ReCAPTCHA from "react-google-recaptcha"
 
 
 const RequestForm = () => {
@@ -7,14 +8,7 @@ const RequestForm = () => {
 
      const {addRequest, msg} = useRequestContext();
 
-      useEffect(() => {
-    if (  grecaptcha) {
-        grecaptcha.render("recaptcha-container", {
-        sitekey: "6LenMtUrAAAAAN2I_jHBUGfzJJ9kmIZlbJ0rLbhq",
-      });
-    }
-  }, []);
-
+       const [captchaToken, setCaptchaToken] = useState<string | null>(null);
     const handleSubmit = async(e : React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();
@@ -28,14 +22,13 @@ const RequestForm = () => {
         const phoneNumber = formData.get("phone") as string;
         const organization = formData.get("organization") as string;
         const description = formData.get("description") as string;
-        const recaptchaToken = formData.get("g-recaptcha-response") as string;
 
 
-        if(!name || !email || !phoneNumber || name.trim() === "" || email.trim() === "" || phoneNumber.trim() === ""){
+        if(!name || !email || !phoneNumber || name.trim() === "" || email.trim() === "" || phoneNumber.trim() === "" || !captchaToken){
             return;
         }
 
-                await addRequest(name, email, organization, phoneNumber, description, recaptchaToken);
+                await addRequest(name, email, organization, phoneNumber, description, captchaToken);
 
                 form.reset();
 
@@ -85,7 +78,10 @@ const RequestForm = () => {
                 className="bg-gray-200 w-[250px] py-1 px-2  border border-gray-400 rounded-lg focus:ring-2 ring-orange-500"
                 />
 
-                <div id="recaptcha-container" data-sitekey="6LenMtUrAAAAAN2I_jHBUGfzJJ9kmIZlbJ0rLbhq"></div>
+                 <ReCAPTCHA
+          sitekey="6LenMtUrAAAAAN2I_jHBUGfzJJ9kmIZlbJ0rLbhq"
+          onChange={(token : string | null) => setCaptchaToken(token)}
+        />
 
 
                 <button
@@ -97,9 +93,9 @@ const RequestForm = () => {
                 {msg !== "" && 
                 <p className="w-[320px] text-center text-gray-100 text-[17px]">{msg}</p>
                 }
-
                                  
             </div>
+            
         </section>
     )
 }

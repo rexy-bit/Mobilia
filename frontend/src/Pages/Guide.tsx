@@ -2,6 +2,7 @@ import { memo, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import RequestForm from "../Components/ReservationComponents/RequestForm";
+import FindUs from "../Components/ReservationComponents/FindUs";
 
 
 const steps = [
@@ -58,7 +59,7 @@ const Guide = () =>  {
             
             <div className="w-full flex flex-row justify-between items-center px-10 py-10 bg-gray-950 text-orange-600 max-[700px]:flex-col max-[700px]:gap-10">
                  <div className="flex flex-col max-[700px]:items-center max-[700px]:gap-4">
-                    <h1 className="text-[3em] font-black max-[1000px]:text-[2em] max-[1000px]:font-bold">How to Book with Mobilia</h1>
+                    <h1 className="text-[3em] font-black max-[1000px]:text-[2em] max-[1000px]:font-bold max-[700px]:text-center">How to Book with Mobilia</h1>
                     <p className="text-white text-[1.2em] w-[500px] max-[1000px]:text-[16px] max-[1000px]:w-[400px] max-[700px]:w-[300px] max-[700px]:text-center ">
                         Fast, simple, and flexible, reserve one or multiple vehicles in just a few steps.
                     </p>
@@ -105,10 +106,10 @@ const Guide = () =>  {
             </div>
 
             <div className="flex flex-col w-full py-10 justify-center items-center bg-orange-600 ">
-                <h1 className="text-[2.5em] font-bold text-white">Multiple Vehicle Reservations</h1>
+                <h1 className="text-[2.5em] font-bold text-white text-center">Multiple Vehicle Reservations</h1>
 
               <div className="flex flex-row items-center justify-center gap-40 w-full mt-15 max-[1050px]:flex-col max-[1050px]:gap-10">
-                <p className="text-[1.3em] text-gray-100 w-[500px]  mt-6 max-[1000px]:text-[1.1em] max-[1050px]:w-[400px] max-[1050px]:text-center">
+                <p className="text-[1.3em] text-gray-100 w-[500px]  mt-6 max-[1000px]:text-[1.1em] max-[1050px]:w-[400px] max-[1050px]:text-center max-[420px]:w-[320px]">
                    For <strong>special occasions</strong> or <strong>professional needs</strong> such as corporate events, weddings, or hotel partnerships, Mobilia offers you the possibility to <strong>reserve several vehicles at once</strong>. Unlike individual bookings, <strong>this service is not available online</strong>; instead, to ensure the <strong>best service</strong> and a <strong>tailored solution</strong>, we invite you to <strong>fill out the request form</strong> and <strong>schedule an appointment directly at our agency</strong>.
                 </p>
                 <img src="https://res.cloudinary.com/dub4fhabm/image/upload/v1758815496/b082eafe-f742-4015-abbd-587a936761f4.png" alt="Customer Service" className="w-[500px] max-[1100px]:w-[400px] max-[1000px]:w-[300px] object-contain"/>
@@ -127,7 +128,7 @@ const Guide = () =>  {
                 
                 <h1 className="text-[2em] font-bold text-center">Why book directly at the agency?</h1>
 
-                <div className="flex flex-row justify-center items-center gap-15 mt-10 mb-15">
+                <div className="flex flex-wrap justify-center items-center gap-15 mt-10 mb-15">
                     {why.map((w)=>{
                         return(
                             <div className="w-[300px] flex flex-col justify-center items-center gap-3 border-gray-400 rounded-2xl border-2 p-3 h-[270px] cursor-pointer transition-transform duration-300 hover:scale-105 shadow-2xl relative"
@@ -145,6 +146,7 @@ const Guide = () =>  {
             </div>
 
             <RequestForm/>
+            <FindUs/>
         </section>
     )
 }

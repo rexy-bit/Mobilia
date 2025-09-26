@@ -13,6 +13,16 @@ import { ReservationProvider } from './Contexts/ReservationContext'
 import Reservations from './Pages/Reservations'
 import Guide from './Pages/Guide'
 import { RequestProvider } from './Contexts/RequestContext'
+import UserRoute from './Layouts/UserRoute'
+import PublicLayout from './Layouts/PublicLayout'
+import AdminRoute from './Layouts/AdminRoute'
+import AdminLayout from './Layouts/AdminLayout'
+import Dashboard from './AdminPages/Dashboard'
+import AdminReservations from './AdminPages/AdminReservations'
+import AdminRequests from './AdminPages/AdminRequests'
+import AdminAccount from './AdminPages/AdminAccount'
+import AdminVehicules from './AdminPages/AdminVehicules'
+import Add from './AdminPages/Add'
 
 function App() {
 
@@ -24,25 +34,28 @@ function App() {
         <RequestProvider>
         
     <Routes>
+
+        <Route element={
+          <UserRoute>
+            <PublicLayout/>
+          </UserRoute>
+        }>
  
         <Route path='/' element={
           <>
-             <Header/>
              <Home/>
            </>
         }/>
 
-
         <Route path='/vehicules' element={
           <>
-            <Header/>
             <Vehicules/>
           </>
         }/>
 
          <Route path='/account' element={
           <>
-            <Header/>
+           
             <Account/>
        
           </>
@@ -50,31 +63,60 @@ function App() {
 
          <Route path='/discover/:id' element={
           <>
-            <Header/>
+           
             <Discover/>
           </>
          }/>
 
          <Route path='/reservation/:id' element={
           <>
-            <Header/>
             <Reservation/> 
           </>
          }/>
 
          <Route path='/reservations' element={
           <>
-            <Header/>
             <Reservations/>
           </>
          }/>
 
          <Route path='/guide' element={
           <>
-            <Header/>
             <Guide/>
           </>
          }/>
+         </Route>
+
+         <Route path='/admin/*' element={
+          <AdminRoute>
+             <AdminLayout/>
+          </AdminRoute>
+         }>
+
+          <Route path="dashboard" element={
+            <Dashboard/>
+          }/>
+           
+           <Route path='reservations' element={
+            <AdminReservations/>
+           }/>
+
+           <Route path="requests" element={
+            <AdminRequests/>
+           }/>
+
+           <Route path='vehicules' element={
+            <AdminVehicules/>
+           }/>
+
+           <Route path='account' element={
+            <AdminAccount/>
+           }/>
+
+           <Route path='add' element={
+            <Add/>
+           }/>
+         </Route>
     </Routes>
 
          </RequestProvider>

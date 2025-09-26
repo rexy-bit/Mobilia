@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { Vehicule } from "./Types";
+import { apiClient } from "../services/apiClient";
+
 
 interface FilterType{
     seats : number;
@@ -16,7 +18,9 @@ interface VehiculesContextType{
     setFilterData : (f : FilterType) => void;
     vehiculeDetails : Vehicule | null;
     getVehicule : (id : string)=>Promise<void>
-   
+    deleteVehicule : (id : string) => Promise<void>
+    updateVehicule : (id : string, formData : FormData) => Promise<void>
+    addVehicule : (formData : FormData) => Promise<void>
 }
 
 const VehiculesContext = createContext<VehiculesContextType | null>(null);
@@ -109,16 +113,86 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
     }
 
 
+    const deleteVehicule = async(id : string)=>{
 
+        try{
+            setLoadingVehicules(true);
+            const res = await apiClient(`http://localhost:5000/api/v1/vehicules/delete/${id}`,{
+                method : "DELETE",
+                headers : {
+                    "Content-Type" : "application/json"
+                }
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                setError(data.error || data.message || "Error in deleting the vehicule");
+                return;
+            }
+
+            await getVehicules();
+
+        }catch(err){
+            console.error(err);
+        }
+    }
+
+
+    const updateVehicule = async(id : string, formData : FormData) => {
+
+        try{
+
+            const res = await apiClient(`http://localhost:5000/api/v1/vehicules/update/${id}`, {
+                method : "PUT",
+                body : formData
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                setError(data.error || data.message || "Error in updating vehicule");
+                return;
+            }
+
+            await getVehicules();
+        }catch(err){
+            console.error(err);
+        }
+    }
+
+
+    const addVehicule = async(formData : FormData) => {
+
+
+        try{
+
+            const res = await apiClient('http://localhost:5000/api/v1/vehicules/add', {
+                method : 'POST',
+                body : formData
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                setError(data.error || data.message || "Error in adding vehicule");
+                return;
+            }
+
+            setError(null);
+
+        }catch(err){
+            console.error(err);
+        }
+    }
 
     useEffect(()=>{
         getVehicules();
     }, [filterData]);
 
-   
 
     return(
-        <VehiculesContext.Provider value={{vehicules, error, getVehicules, loadingVehicules, filterData, setFilterData, getVehicule, vehiculeDetails}}>
+        <VehiculesContext.Provider value={{vehicules, error, getVehicules, loadingVehicules, filterData, setFilterData, getVehicule, vehiculeDetails, deleteVehicule, updateVehicule, addVehicule}}>
             {children}
         </VehiculesContext.Provider>
     );
@@ -134,6 +208,7 @@ export const useVehiculesContext = () => {
     } 
 
     return context;
+    
 }
 
 
