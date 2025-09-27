@@ -168,15 +168,28 @@ export const updateVehicule = async(req , res, next)  => {
 
     if(description !== undefined) updates.description = description.trim();
 
-    if (req.files && Array.isArray(req.files) && req.files.length > 0) {
-  // On upload toutes les images en parallèle
+
+
+   let finalImages = [];
+
+// Anciennes images si envoyées depuis le front
+if (req.body.oldImages) {
+  try {
+    finalImages = JSON.parse(req.body.oldImages);
+  } catch (e) {
+    console.error("oldImages parsing error:", e);
+  }
+}
+
+// Nouvelles images uploadées
+if (req.files && Array.isArray(req.files) && req.files.length > 0) {
   const uploadPromises = req.files.map((file) => {
     return new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
         { folder: "mobilia" },
         (error, result) => {
           if (error) reject(error);
-          else resolve(result);
+          else resolve(result.secure_url);
         }
       );
       stream.end(file.buffer);
@@ -184,14 +197,11 @@ export const updateVehicule = async(req , res, next)  => {
   });
 
   const results = await Promise.all(uploadPromises);
+  finalImages = [...finalImages, ...results]; // ✅ concat anciennes + nouvelles
+}
 
-  // Récupérer les URLs Cloudinary
-  updates.images = results.map((r) => r.secure_url);
-
-} else if (req.body.oldImages) {
-  // Si tu veux garder les anciennes images
-  // Attention: oldImages doit être un tableau côté front
-  updates.images = req.body.oldImages;
+if (finalImages.length > 0) {
+  updates.images = finalImages;
 }
 
 

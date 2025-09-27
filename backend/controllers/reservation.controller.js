@@ -75,7 +75,7 @@ export const addReservation = async(req , res , next) => {
          });
 
     }catch(err){
-        console.error(err);
+        next(err);
     }
 }
 
@@ -150,11 +150,98 @@ export const cancelReservation = async(req , res , next) => {
         await vehicule.save();
 
         res.status(200).json({
-            success: "true",
+            success: true,
             message : "Reservation cancelled successfully",
             data : reservation
         });
 
+    }catch(err){
+        next(err);
+    }
+}
+
+
+export const getAllReservations = async(req , res , next) => {
+
+    try{
+    const reservations = await Reservation.find();
+
+    res.status(200).json({
+        success: true,
+        message : "All Reservations fetched successfully",
+        data : reservations
+    });
+
+    }catch(err){
+        next(err);
+    }
+
+}
+
+
+export const deleteReservation = async(req , res , next) => {
+
+    try{
+
+    const reservationId = req.params.id;
+
+    const reservation =  await Reservation.findByIdAndDelete(reservationId);
+
+    if(!reservation){
+        return res.status(404).json({
+            success : false,
+            message : "Error reservation not found",
+            
+        });
+    }
+
+    res.status(200).json({
+        success : true,
+        message : "Reservation deleted successfully",
+        data : reservation
+    });
+
+   }catch(err){
+    next(err);
+   }
+   
+}
+
+
+export const updateReservation = async(req , res , next) => {
+
+    try{
+
+        const reservationId = req.params.id;
+
+        const {status} = req.body;
+
+        const reservation = await Reservation.findById(reservationId);
+
+        if(!reservation){
+            return res.status(404).json({
+                success : false,
+                message : "Error reservation not found"
+            });
+        }
+
+        if(!status || status.trim() === ""){
+            return res.status(400).json({
+                success : false,
+                message : "Error nvalid status",
+            
+            });
+        }
+
+        reservation.status = status;
+
+        await reservation.save()
+
+        res.status(200).json({
+            success : true,
+            message : "Reservation updated successfully",
+            data : reservation
+        })
     }catch(err){
         next(err);
     }

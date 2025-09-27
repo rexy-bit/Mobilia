@@ -1,89 +1,89 @@
-import { memo,  useState } from "react";
+import { memo, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom"
 import { useVehiculesContext } from "../Contexts/VehiculesContext";
-import { useNavigate } from "react-router-dom";
 
 
+const Update = () => {
 
+    const {id} = useParams();
+    const [imageFiles, setImageFiles] = useState<File[]>([]);
 
-const Add = () => {
+    const {getVehicule, updateVehicule, vehiculeDetails, setVehiculeDetails, loadingVehicules} = useVehiculesContext();
 
-    const [vehicule, setVehicule] = useState({
-        brand : "",
-        model : "",
-        category : "Standard",
-        priceDay : 0,
-        available : "true",
-        fuelType : "Petrol",
-        seats : 0,
-        transmission : "Manual",
-        year : 2000,
-        description : ""
-    });
+    useEffect(()=>{
+       getVehicule(id);
+    }, [id]);
+
+    if(!vehiculeDetails){
+        return(
+          <div className="mt-10">Vehicule Not found</div>
+        );
+    }
 
     const navigate = useNavigate();
-     const [imageFiles, setImageFiles] = useState<File[]>([]);
 
-     const {addVehicule} = useVehiculesContext();
 
-    const {loadingVehicules} = useVehiculesContext();
-    const handleChange = (e : React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
 
         const {name, value, type} = e.target;
 
-        setVehicule({
-            ...vehicule,
-            [name] : type === "number" ?  Number(value) : value
+        setVehiculeDetails({
+            ...vehiculeDetails!,
+            [name] : type === "number" ? Number(value) : value
         });
-
     }
 
-    const submitForm = async(e : React.FormEvent<HTMLFormElement>) => {
+
+        const submitForm = async(e : React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();
 
-        if(!vehicule.brand || !vehicule.model || !vehicule.category || vehicule.priceDay === undefined || !vehicule.available || !vehicule.fuelType || vehicule.seats === undefined || !vehicule.transmission || vehicule.year === undefined || !vehicule.description){
+        if(!vehiculeDetails?.brand || !vehiculeDetails?.model || !vehiculeDetails?.category || vehiculeDetails?.priceDay === undefined || !vehiculeDetails?.available || !vehiculeDetails?.fuelType || vehiculeDetails?.seats === undefined || !vehiculeDetails?.transmission || vehiculeDetails?.year === undefined || !vehiculeDetails?.description){
             return;
         }
 
         const formData = new FormData();
 
-        formData.append("brand", vehicule.brand);
-        formData.append("model", vehicule.model)
-        formData.append("category", vehicule.category);
-        formData.append("priceDay", String(vehicule.priceDay));
-        formData.append("available", vehicule.available);
-        formData.append("fuelType", vehicule.fuelType);
-        formData.append("seats", String(vehicule.seats));
-        formData.append("transmission", vehicule.transmission);
-        formData.append("year", String(vehicule.year));
-        formData.append("description", vehicule.description);
+        formData.append("brand", vehiculeDetails?.brand);
+        formData.append("model", vehiculeDetails?.model)
+        formData.append("category", vehiculeDetails?.category);
+        formData.append("priceDay", String(vehiculeDetails?.priceDay));
+        formData.append("available", String(vehiculeDetails?.available));
+        formData.append("fuelType", vehiculeDetails?.fuelType);
+        formData.append("seats", String(vehiculeDetails?.seats));
+        formData.append("transmission", vehiculeDetails?.transmission);
+        formData.append("year", String(vehiculeDetails?.year));
+        formData.append("description", vehiculeDetails?.description);
+        formData.append("oldImages", JSON.stringify(vehiculeDetails.images));
 
             imageFiles.forEach((file) => {
             formData.append("images", file); // "images" doit être le même nom que celui attendu par ton backend (Multer par ex)
             });
 
-            await addVehicule(formData);
+            await updateVehicule(vehiculeDetails._id, formData);
     }
 
-
+    
     return(
-        <section className="flex flex-col min-h-screen items-center">
 
-            {
+        <section className="flex flex-col items-center min-h-screen w-full relative">
+             
+                  {
                  loadingVehicules ?
                   <div className="mt-20">
                   <i className="fa-solid fa-car-side fa-spin text-[2.5em]"></i>
                </div> : 
                <div className="flex flex-col items-center">
-                   <h1 className="mt-10 text-[1.8em] font-black">Add a New Vehicule</h1>
-                  <form onSubmit={submitForm} className="flex flex-col p-3 bg-gray-200 border-3 border-orange-600 rounded-xl gap-5 py-5 mt-7 mb-15">
+                   <h1 className="mt-10 text-[1.8em] font-black text-center">Update and View Vehicule Details</h1>
+                  <form onSubmit={submitForm} className="flex flex-col p-3 bg-gray-200 border-3 border-orange-600 rounded-xl gap-5 py-5 mt-7 mb-15 w-[500px] items-center max-[550px]:w-[400px] max-[420px]:w-[350px] max-[380px]:w-[350px]">
                     <div>
                       <p>Brand:</p>
                        <input 
                        type="text" 
                        name="brand"
                         className="bg-gray-50 px-2 py-1 w-[400px] rounded-[5px] border border-gray-300  focus:ring-2 ring-orange-500 max-[450px]:w-[350px] max-[380px]:w-[320px]"
-                        value={vehicule.brand}
+                        value={vehiculeDetails?.brand}
                         placeholder="Brand"
                         onChange={handleChange}
 
@@ -98,7 +98,7 @@ const Add = () => {
                        name="model"
                        className="bg-gray-50 px-2 py-1 w-[400px] rounded-[5px] border border-gray-300  focus:ring-2 ring-orange-500 max-[450px]:w-[350px] max-[380px]:w-[320px]"
                        placeholder="Model"
-                        value={vehicule.model}
+                        value={vehiculeDetails?.model}
                         onChange={handleChange}
                        required
                        />
@@ -108,7 +108,7 @@ const Add = () => {
                         <p>Category:</p>
                        <select 
                        name="category" 
-                       value={vehicule.category}
+                       value={vehiculeDetails?.category}
                       className="bg-gray-50 px-2 py-1 w-[400px] rounded-[5px] border border-gray-300  focus:ring-2 ring-orange-500 max-[450px]:w-[350px] max-[380px]:w-[320px]"
                        onChange={handleChange}
                        >
@@ -128,7 +128,7 @@ const Add = () => {
                        name="priceDay"
             className="bg-gray-50 px-2 py-1 w-[400px] rounded-[5px] border border-gray-300  focus:ring-2 ring-orange-500 max-[450px]:w-[350px] max-[380px]:w-[320px]"
                        placeholder="Price Day"
-                       value={vehicule.priceDay}
+                       value={vehiculeDetails?.priceDay}
                        onChange={handleChange}
                        />
                        </div>
@@ -138,7 +138,7 @@ const Add = () => {
                         <select 
                         name="available" 
                        className="bg-gray-50 px-2 py-1 w-[400px] rounded-[5px] border border-gray-300  focus:ring-2 ring-orange-500 max-[450px]:w-[350px] max-[380px]:w-[320px]"
-                         value={vehicule.available ? "true" : "false"}
+                         value={vehiculeDetails?.available ? "true" : "false"}
                         onChange={handleChange}
                         >
                             <option value="true">Yes</option>
@@ -149,7 +149,7 @@ const Add = () => {
                        <div>
                         <p>Fuel Type:</p>
                         <select name="fuelType" id=""
-                        value={vehicule.fuelType}
+                        value={vehiculeDetails?.fuelType}
                         className="bg-gray-50 px-2 py-1 w-[400px] rounded-[5px] border border-gray-300  focus:ring-2 ring-orange-500 max-[450px]:w-[350px] max-[380px]:w-[320px]"
                         onChange={handleChange}
                         >
@@ -167,7 +167,7 @@ const Add = () => {
                         name="seats"
                         className="bg-gray-50 px-2 py-1 w-[400px] rounded-[5px] border border-gray-300  focus:ring-2 ring-orange-500 max-[450px]:w-[350px] max-[380px]:w-[320px]"
                         placeholder="Seats"
-                        value={vehicule.seats}
+                        value={vehiculeDetails?.seats}
                         onChange={handleChange}
                         />
                         </div>
@@ -177,7 +177,7 @@ const Add = () => {
                         <select name="transmission" 
                         id=""
                         className="bg-gray-50 px-2 py-1 w-[400px] rounded-[5px] border border-gray-300  focus:ring-2 ring-orange-500 max-[450px]:w-[350px] max-[380px]:w-[320px]"
-                        value={vehicule.transmission}
+                        value={vehiculeDetails?.transmission}
                         onChange={handleChange}
                          
                         >
@@ -193,7 +193,7 @@ const Add = () => {
                        className="bg-gray-50 px-2 py-1 w-[400px] rounded-[5px] border border-gray-300  focus:ring-2 ring-orange-500 max-[450px]:w-[350px] max-[380px]:w-[320px]"
                         name="year"
                         placeholder="year"
-                        value={vehicule.year}
+                        value={vehiculeDetails?.year}
                         onChange={handleChange}
                         />
                         </div>
@@ -204,13 +204,35 @@ const Add = () => {
                         className="bg-gray-50 px-2 py-1 w-[400px] rounded-[5px] border border-gray-300  focus:ring-2 ring-orange-500 max-[450px]:w-[350px] max-[380px]:w-[320px]"
                         placeholder="Description"
                         name="description"
-                        value={vehicule.description}
+                        value={vehiculeDetails?.description}
                         onChange={handleChange}
                         />
                         </div>
 
                             <div className="flex flex-col justify-center items-center">
-      <p className="font-bold text-[1.5em] text-blue-900">Images</p>
+      <p className="font-bold text-[1.5em] text-orange-600">Images</p>
+
+
+      <div className="flex flex-wrap gap-5 items-center justify-center">
+        {vehiculeDetails?.images.map((m : string,i : number)=>{
+            return(
+                <div key={i} className="relative">
+                <img src={m} alt={vehiculeDetails.model} className="w-[100px] h-[100px] object-contain"/>
+                <button className="absolute top-5 right-1 text-red-600 cursor-pointer transition-opacity duration-200 hover:opacity-80 active:opacity-60" onClick={()=>{
+                    setVehiculeDetails({
+                        ...vehiculeDetails,
+                        images : vehiculeDetails.images.filter((img)=> img !== m)
+                    })
+                }}
+                type="button"
+                >
+                    
+                    &#10006;
+                </button>
+                </div>
+            )
+        })}
+      </div>
 
       <input
         type="file"
@@ -223,18 +245,27 @@ const Add = () => {
           }
         }}
         className="p-3 border border-gray-300 bg-gray-100 rounded-full cursor-pointer"
-        required
       />
 
       {imageFiles.length > 0 && (
         <div className="flex gap-3 mt-5 flex-col justify-center">
           {imageFiles.map((file, idx) => (
+            <div key={idx} className="relative">
             <img
-              key={idx}
+              
               src={URL.createObjectURL(file)}
               alt={`preview-${idx}`}
               className="w-[150px] h-[150px] object-contain"
             />
+
+              <button className="absolute top-5 right-1 text-red-600 cursor-pointer transition-opacity duration-200 hover:opacity-80 active:opacity-60" onClick={()=>{
+                    setImageFiles(prev => prev.filter((img)=>img !== file))
+                }}
+                type="button"
+                >
+                     &#10006;
+                </button>
+            </div>
           ))}
         </div>
       )}
@@ -246,13 +277,12 @@ const Add = () => {
                 </div>
             }
 
-              <button
+                <button
             className="bg-white text-black font-bold absolute top-2 left-2 px-3 py-1 border-2 border-black rounded-full cursor-pointer transition-all duration-300 hover:bg-gray-100 active:bg-gray-200"
             onClick={()=>navigate(-1)}
             >&#8592; Back</button>
-
         </section>
     )
 }
 
-export default memo(Add);
+export default memo(Update);

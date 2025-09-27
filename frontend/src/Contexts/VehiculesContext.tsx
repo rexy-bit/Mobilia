@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { Vehicule } from "./Types";
 import { apiClient } from "../services/apiClient";
+import { useNavigate } from "react-router-dom";
 
 
 interface FilterType{
@@ -17,6 +18,7 @@ interface VehiculesContextType{
     filterData: FilterType;
     setFilterData : (f : FilterType) => void;
     vehiculeDetails : Vehicule | null;
+    setVehiculeDetails : (v : Vehicule)=>void;
     getVehicule : (id : string)=>Promise<void>
     deleteVehicule : (id : string) => Promise<void>
     updateVehicule : (id : string, formData : FormData) => Promise<void>
@@ -30,6 +32,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
     const [vehicules, setVehicules] = useState<Vehicule[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [loadingVehicules, setLoadingVehicules] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const [filterData, setFilterData] = useState<FilterType>(()=>{
         const saved = localStorage.getItem('filterData');
@@ -115,6 +118,8 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
 
     const deleteVehicule = async(id : string)=>{
 
+        setLoadingVehicules(true);
+
         try{
             setLoadingVehicules(true);
             const res = await apiClient(`http://localhost:5000/api/v1/vehicules/delete/${id}`,{
@@ -135,6 +140,8 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
 
         }catch(err){
             console.error(err);
+        }finally{
+            setLoadingVehicules(false);
         }
     }
 
@@ -156,6 +163,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
             }
 
             await getVehicules();
+            navigate('/admin/vehicules');
         }catch(err){
             console.error(err);
         }
@@ -165,6 +173,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
     const addVehicule = async(formData : FormData) => {
 
 
+        setLoadingVehicules(true);
         try{
 
             const res = await apiClient('http://localhost:5000/api/v1/vehicules/add', {
@@ -180,9 +189,13 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
             }
 
             setError(null);
+            await getVehicules();
+            navigate('/admin/vehicules');
 
         }catch(err){
             console.error(err);
+        }finally{
+            setLoadingVehicules(false);
         }
     }
 
@@ -192,7 +205,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
 
 
     return(
-        <VehiculesContext.Provider value={{vehicules, error, getVehicules, loadingVehicules, filterData, setFilterData, getVehicule, vehiculeDetails, deleteVehicule, updateVehicule, addVehicule}}>
+        <VehiculesContext.Provider value={{vehicules, error, getVehicules, loadingVehicules, filterData, setFilterData, getVehicule, vehiculeDetails, deleteVehicule, updateVehicule, addVehicule, setVehiculeDetails}}>
             {children}
         </VehiculesContext.Provider>
     );

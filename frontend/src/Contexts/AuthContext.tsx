@@ -5,6 +5,7 @@ import type { User } from "./Types";
 
 interface AuthContextType{
     currentUser : User | null;
+    setCurrentUser : (u : User)=>void
     error : string | null;
     signUp : (name :string, email : string, password : string)=>Promise<void>
     signIn : (email : string, password : string)=>Promise<void>
@@ -18,7 +19,9 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({children} : {children : React.ReactNode}) => {
 
     const [currentUser, setCurrentUser] = useState<User | null>(()=>{
+
         try {
+
     const saved = localStorage.getItem("currentUser");
 
     // si rien en storage → null
@@ -140,7 +143,7 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
 
 
     return(
-        <AuthContext.Provider value={{currentUser, error, signUp, signIn, signOut}}>
+        <AuthContext.Provider value={{currentUser, error, signUp, signIn, signOut, setCurrentUser}}>
             {children}
         </AuthContext.Provider>
     )

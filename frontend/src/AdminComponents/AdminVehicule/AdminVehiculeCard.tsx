@@ -1,13 +1,17 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import type { Vehicule } from "../../Contexts/Types";
 import { useNavigate } from "react-router-dom";
+import DeleteVehiculePop from "./DeleteVehiculePop";
 
 
 const AdminVehiculeCard = ({vehicule} : {vehicule : Vehicule}) => {
 
     const navigate = useNavigate();
 
+    const [showPop, setShowPop] = useState<boolean>(false);
+
     return(
+        <>
 
         <div className="flex flex-col items-center border-[2px] border-gray-300 rounded-lg w-[300px] h-[410px] shadow-xl">
             <h1 className="text-black font-bold text-[1.3em] mt-2">{vehicule.brand} {vehicule.model}</h1>
@@ -50,15 +54,24 @@ const AdminVehiculeCard = ({vehicule} : {vehicule : Vehicule}) => {
 
             
                  <div className="flex flex-row justify-center items-center gap-5 mt-5 mb-5">
-                    <button className="bg-white text-black border border-black w-[110px] py-2 rounded-full cursor-pointer transition-all duration-200 hover:bg-gray-100 active:bg-gray-200" onClick={()=>navigate(`/discover/${vehicule._id}`)}>Details</button>
+                    <button className="bg-white text-black border border-black w-[110px] py-2 rounded-full cursor-pointer transition-all duration-200 hover:bg-gray-100 active:bg-gray-200" onClick={()=>navigate(`/admin/update/${vehicule._id}`)}>Details</button>
                     
-                    <button className="py-2 rounded-full w-[110px] text-white font-bold cursor-pointer transition-all duration-200 bg-red-600 border border-red-600 hover:opacity-80 active:opacity-60">
+                    <button className="py-2 rounded-full w-[110px] text-white font-bold cursor-pointer transition-all duration-200 bg-red-600 border border-red-600 hover:opacity-80 active:opacity-60" onClick={()=>setShowPop(true)}>
                         Delete
                     </button>
                     
                  </div>
 
         </div>
+
+        {showPop &&
+        <DeleteVehiculePop 
+        setShowPop={setShowPop}
+        vehiculeId={vehicule._id}
+          
+        />
+         }
+        </>
     )
     
 }

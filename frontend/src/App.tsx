@@ -23,6 +23,8 @@ import AdminRequests from './AdminPages/AdminRequests'
 import AdminAccount from './AdminPages/AdminAccount'
 import AdminVehicules from './AdminPages/AdminVehicules'
 import Add from './AdminPages/Add'
+import Update from './AdminPages/Update'
+import { UsersContextProvider } from './Contexts/UsersContext'
 
 function App() {
 
@@ -32,6 +34,7 @@ function App() {
      <VehiculesProvider>
       <ReservationProvider>
         <RequestProvider>
+          <UsersContextProvider>
         
     <Routes>
 
@@ -116,9 +119,14 @@ function App() {
            <Route path='add' element={
             <Add/>
            }/>
+
+           <Route path='update/:id' element={
+            <Update/>
+           }/>
          </Route>
     </Routes>
 
+           </UsersContextProvider>
          </RequestProvider>
       </ReservationProvider>
     </VehiculesProvider>
