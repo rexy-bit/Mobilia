@@ -1,6 +1,7 @@
 import Reservation from "../models/reservation.model.js";
 import User from "../models/user.model.js";
 import Vehicule from "../models/vehicule.model.js";
+import mongoose from "mongoose";
 
 
 export const addReservation = async(req , res , next) => {
@@ -164,7 +165,7 @@ export const cancelReservation = async(req , res , next) => {
 export const getAllReservations = async(req , res , next) => {
 
     try{
-    const reservations = await Reservation.find();
+    const reservations = await Reservation.find().sort({ createdAt: -1 });;
 
     res.status(200).json({
         success: true,
@@ -213,8 +214,16 @@ export const updateReservation = async(req , res , next) => {
     try{
 
         const reservationId = req.params.id;
+        console.log("param Id : ", req.params.id);
 
         const {status} = req.body;
+
+            if (!mongoose.Types.ObjectId.isValid(reservationId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid reservation ID",
+      });
+    }
 
         const reservation = await Reservation.findById(reservationId);
 
@@ -235,7 +244,7 @@ export const updateReservation = async(req , res , next) => {
 
         reservation.status = status;
 
-        await reservation.save()
+        await reservation.save({ validateModifiedOnly: true })
 
         res.status(200).json({
             success : true,

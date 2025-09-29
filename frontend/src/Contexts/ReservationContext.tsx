@@ -11,6 +11,10 @@ interface ReservationContextType{
     error : string | null;
     getReservations : () => Promise<void>;
     cancelReservation : (reservationId : string) => Promise<void>
+    loadingReservations : boolean | null;
+    getAllReservations : () => Promise<void>
+    allReservations : Reservation[];
+    updateReservationStatus : (status : string, reservationId : string)=>Promise<void>
 }
 
 const ReservationContext = createContext<ReservationContextType | null>(null);
@@ -21,11 +25,14 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
     const {getVehicules} = useVehiculesContext();
     const {currentUser} = useAuthContext();
     const navigate = useNavigate();
+    const [loadingReservations, setLoadingReservations] = useState<boolean>(false);
 
     const [reservations, setReservations] = useState<Reservation[]>([]);
+    const [allReservations, setAllReservations] = useState<Reservation[]>([]);
 
     const addReservation = async(reservation : Reservation) => {
 
+        setLoadingReservations(true);
         try{
 
           const res = await apiClient("http://localhost:5000/api/v1/reservations/add", {
@@ -50,6 +57,8 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
           
         }catch(err){
             console.error(err);
+        }finally{
+            setLoadingReservations(false);
         }
 
     }
@@ -57,6 +66,7 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
     const getReservations = async() => {
 
         if(!currentUser) return;
+
 
         try{
              
@@ -110,13 +120,83 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
         }
     }
 
+
+    const getAllReservations = async() => {
+  
+        if(!currentUser || currentUser.role !== "admin") return;
+        
+
+        setLoadingReservations(true);
+        try{
+
+            const res = await apiClient('http://localhost:5000/api/v1/reservations/all', {
+                method : "GET",
+            });
+        
+            const data = await res.json();
+
+            if(!res.ok){
+                setError(data.error || data.message || "Error in getting all reservations");
+                console.log(data.error || data.message || "Error in getting all reservations");
+                return;
+            }
+
+            setError(null);
+
+            setAllReservations(data.data);
+            console.log(data.data);
+            console.log('All reservations : ', allReservations);
+
+        }catch(err){
+            console.error(err);
+        }finally{
+            setLoadingReservations(false);
+        }
+    }
+
+
+    const updateReservationStatus = async(status : string, reservationId  : string) => {
+
+        try{
+            const res = await apiClient(`http://localhost:5000/api/v1/reservations/update/${reservationId}`,{
+                method : "PUT",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify({status})
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                console.error(data.message || data.error || "Error in updating user");
+                return;
+            }
+
+            setError(null);
+
+            await getAllReservations();
+            
+        }catch(err){
+            console.error(err);
+        }
+    }
+
+
+    useEffect(()=>{
+        if(currentUser?.role === "admin"){
+            getAllReservations();
+        }
+
+    } , []);
+
     useEffect(()=>{
         getReservations()
     }, []);
 
 
     return(
-        <ReservationContext.Provider value={{addReservation, error, reservations, getReservations, cancelReservation}}>
+        <ReservationContext.Provider value={{addReservation, error, reservations, getReservations, cancelReservation, loadingReservations, getAllReservations, allReservations, updateReservationStatus}}>
             {children}
         </ReservationContext.Provider>
     )

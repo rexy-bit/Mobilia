@@ -61,7 +61,7 @@ export const getAllRequests = async(req , res , next) => {
 
     try{
 
-        const requests = await Request.find();
+        const requests = await Request.find().sort({ createdAt: -1 });;
 
         return res.status(200).json({
             success : true,
@@ -111,3 +111,5 @@ export const updateStatus = async(req , res , next) => {
         next(err);
     }
 }
+
+

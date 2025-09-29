@@ -227,7 +227,7 @@ const Add = () => {
       />
 
       {imageFiles.length > 0 && (
-        <div className="flex gap-3 mt-5 flex-col justify-center">
+        <div className="flex gap-0 mt-5 flex-col justify-center">
           {imageFiles.map((file, idx) => (
             <img
               key={idx}

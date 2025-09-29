@@ -7,6 +7,7 @@ const Update = () => {
 
     const {id} = useParams();
     const [imageFiles, setImageFiles] = useState<File[]>([]);
+     const navigate = useNavigate();
 
     const {getVehicule, updateVehicule, vehiculeDetails, setVehiculeDetails, loadingVehicules} = useVehiculesContext();
 
@@ -20,7 +21,7 @@ const Update = () => {
         );
     }
 
-    const navigate = useNavigate();
+   
 
 
 
