@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { Vehicule } from "./Types";
 import { apiClient } from "../services/apiClient";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "./AuthContext";
 
 
 interface FilterType{
@@ -23,6 +24,7 @@ interface VehiculesContextType{
     deleteVehicule : (id : string) => Promise<void>
     updateVehicule : (id : string, formData : FormData) => Promise<void>
     addVehicule : (formData : FormData) => Promise<void>
+    rented : Vehicule[];
 }
 
 const VehiculesContext = createContext<VehiculesContextType | null>(null);
@@ -33,6 +35,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
     const [error, setError] = useState<string | null>(null);
     const [loadingVehicules, setLoadingVehicules] = useState<boolean>(false);
     const navigate = useNavigate();
+    const [rented, setRented] = useState<Vehicule[]>([]);
 
     const [filterData, setFilterData] = useState<FilterType>(()=>{
         const saved = localStorage.getItem('filterData');
@@ -47,6 +50,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
 
     const [vehiculeDetails, setVehiculeDetails] = useState<Vehicule | null>(null);
 
+    const {currentUser} = useAuthContext();
 
 
     useEffect(()=>{
@@ -199,13 +203,47 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
         }
     }
 
+
+    const getRentedVehicules = async() => {
+
+        if(!currentUser || currentUser.role !== "admin") return;
+
+        try{
+
+            const res = await apiClient("http://localhost:5000/api/v1/vehicules/rented", {
+                method : "GET"
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                  setError(data.error || data.message || "Error in adding vehicule");
+                return;
+            }
+
+            setError(null);
+
+            setRented(data.data);
+
+        }catch(err){
+            console.error(err);
+        }
+
+    }
+
     useEffect(()=>{
         getVehicules();
     }, [filterData]);
 
+    useEffect(()=>{
+        if(currentUser?.role === "admin"){
+            getRentedVehicules();
+        }
+    }, [])
+
 
     return(
-        <VehiculesContext.Provider value={{vehicules, error, getVehicules, loadingVehicules, filterData, setFilterData, getVehicule, vehiculeDetails, deleteVehicule, updateVehicule, addVehicule, setVehiculeDetails}}>
+        <VehiculesContext.Provider value={{vehicules, error, getVehicules, loadingVehicules, filterData, setFilterData, getVehicule, vehiculeDetails, deleteVehicule, updateVehicule, addVehicule, setVehiculeDetails, rented}}>
             {children}
         </VehiculesContext.Provider>
     );

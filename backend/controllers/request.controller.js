@@ -99,7 +99,7 @@ export const updateStatus = async(req , res , next) => {
 
         request.status = status;
 
-        await request.save();
+        await request.save({ validateModifiedOnly: true });
 
         res.status(200).json({
             success : false,
@@ -111,5 +111,65 @@ export const updateStatus = async(req , res , next) => {
         next(err);
     }
 }
+
+
+export const searchRequest = async(req , res , next) => {
+
+    try{
+
+        const {search} = req.body;
+
+        if(!search || search.trim() === ""){
+            return res.status(400).json({
+                success :false,
+                message : "Invalid search",
+                
+            });
+
+        }
+
+
+        const regex = new RegExp(search, "i");
+
+        const searchData = await Request.find({
+            $or : [
+                {name : regex},
+                {email : regex},
+                {organization : regex},
+                {phoneNumber : regex},
+                {description : regex},
+                {status : regex}
+            ]
+        });
+
+           res.status(200).json({
+            success : true,
+            message : "Search Data found",
+            data : searchData
+        });
+        
+    }catch(err){
+        next(err);
+    }
+
+}
+
+
+export const unCheckedRequests = async(req , res , next) => {
+
+    try{
+
+       const unChecked = await Request.find({status: "new"});
+
+        res.status(200).json({
+            success : true,
+            message : "Unchecked requests fetched",
+            data : unChecked
+        });
+    }catch(err){
+        next(err);
+    }
+}
+
 
 

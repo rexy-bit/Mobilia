@@ -11,7 +11,7 @@ const AdminReservationCard = ({reservation} : {reservation : Reservation}) => {
     const {updateReservationStatus} = useReservationContext();
 
     return(
-        <div className="flex flex-col gap-1 bg-gray-200 p-5 w-[300px] border-3 border-orange-600 rounded-xl">
+        <div className="flex flex-col gap-1 bg-gray-200 p-5 w-[300px] border-3 border-orange-600 rounded-xl transition-transform duration-300 hover:scale-x-105">
               <p>- Vehicule: <strong>{reservation.vehiculeName}</strong></p>
               <p>- VehiculeId : <strong>{reservation.vehiculeId}</strong></p>
               <p>- User Name : <strong>{reservation.userName}</strong></p>
@@ -39,7 +39,7 @@ const AdminReservationCard = ({reservation} : {reservation : Reservation}) => {
                 onClick={()=>{
                      setUpdate(prev => !prev);
                 }} 
-                className="bg-orange-600 text-white py-2 rounded-lg font-bold cursor-pointer transition-opacity duration-200 hover:opacity-70 active:opacity-50 mb-5"
+                className="bg-orange-600 text-white py-2 rounded-lg font-bold cursor-pointer transition-opacity duration-200 hover:opacity-70 active:opacity-50 mb-5 mt-5"
                 >
                     {update ? "Updating" : "Update Status"}
                 </button>
@@ -58,6 +58,7 @@ const AdminReservationCard = ({reservation} : {reservation : Reservation}) => {
 
                       <button onClick={async()=>{
                         await updateReservationStatus(status, reservation._id);
+                        setUpdate(false);
                     }}
                         className="bg-black text-white px-2 py-1 rounded-[5px] font-bold cursor-pointer transition-opacity duration-300 hover:opacity-70 active:opacity-50"
                         >

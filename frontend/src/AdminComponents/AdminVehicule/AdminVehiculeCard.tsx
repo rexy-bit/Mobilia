@@ -13,7 +13,7 @@ const AdminVehiculeCard = ({vehicule} : {vehicule : Vehicule}) => {
     return(
         <>
 
-        <div className="flex flex-col items-center border-[2px] border-gray-300 rounded-lg w-[300px] h-[410px] shadow-xl">
+        <div className="flex flex-col items-center border-[2px] border-gray-300 rounded-lg w-[300px] h-[410px] shadow-xl bg-white">
             <h1 className="text-black font-bold text-[1.3em] mt-2">{vehicule.brand} {vehicule.model}</h1>
 
             <img src={vehicule.images[0]} alt={vehicule.model} className="h-[150px] w-[150px] object-contain "/>

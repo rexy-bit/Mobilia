@@ -1,7 +1,8 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState , useContext} from "react";
 import { useAuthContext } from "./AuthContext";
 import { apiClient } from "../services/apiClient";
 import type { User } from "./Types";
+
 
 
 interface UsersContextType{
@@ -12,6 +13,9 @@ interface UsersContextType{
     users : User[];
     getAllUsers : ()=>Promise<void>
     deleteUser : (userId : string)=>Promise<void>
+    updateUserRole : (role : string, userId : string)=>Promise<void>
+    searchUser : (s : string)=>Promise<void>
+    usersSearch : User[] | null;
 }
 
 
@@ -24,6 +28,7 @@ export const UsersContextProvider = ({children} : {children : React.ReactNode}) 
 
     const [error, setError] = useState<string | null>(null);
     const [loadingUsers, setLoadingUsers] = useState<boolean>(false);
+    const [usersSearch, setUsersSearch] = useState<User[] | null>(null);
 
 
     const getProfile = async() => {
@@ -87,7 +92,7 @@ export const UsersContextProvider = ({children} : {children : React.ReactNode}) 
         
         try{
 
-            const res = await apiClient(`http://localhost:5000/api/v1/users/${userId}`, {
+            const res = await apiClient(`http://localhost:5000/api/v1/users/delete/${userId}`, {
                 method : "DELETE",
             });
 
@@ -108,6 +113,58 @@ export const UsersContextProvider = ({children} : {children : React.ReactNode}) 
         }
     }
 
+
+    const updateUserRole = async(role : string, userId : string) => {
+
+        try{
+
+            const res = await apiClient(`http://localhost:5000/api/v1/users/update/${userId}`, {
+                method : 'PUT',
+                headers: {
+                  "Content-Type" : "application/json"
+                },
+                body : JSON.stringify({role})
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                console.log(data.error || data.message || "Error in updating user");
+                return;
+            }
+
+            await getAllUsers();
+        }catch(err){
+            console.error(err);
+        }
+    }
+
+    const searchUser = async(s : string) => {
+
+        try{
+
+            const res = await apiClient("http://localhost:5000/api/v1/users/search", {
+                method :"POST",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify({search : s})
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                console.log(data.error || data.message || "Error in updating user");
+                return;
+            }
+
+            setUsers(data.data);
+            
+
+        }catch(err){
+            console.error(err);
+        }
+    }
     useEffect(()=>{
         getAllUsers();
     }, []);
@@ -119,7 +176,7 @@ export const UsersContextProvider = ({children} : {children : React.ReactNode}) 
   
 
     return(
-        <UsersContext.Provider value={{loadingUsers, users, getAllUsers, getProfile, deleteUser, error}}>
+        <UsersContext.Provider value={{loadingUsers, users, getAllUsers, getProfile, deleteUser, error, updateUserRole, searchUser, usersSearch }}>
             {children}
         </UsersContext.Provider>
     )
@@ -128,7 +185,7 @@ export const UsersContextProvider = ({children} : {children : React.ReactNode}) 
 
 export const useUsersContext = () => {
 
-    const context = createContext(UsersContext);
+    const context = useContext(UsersContext);
 
     if(!context){
         throw new Error("use the useUsersContext inside the UsersProvider");

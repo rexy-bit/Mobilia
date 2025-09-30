@@ -5,6 +5,7 @@ export interface User{
     name : string;
     email: string;
     role : string;
+    createdAt : string;
     password? : string;
 }
 
@@ -45,4 +46,6 @@ export interface Request{
     phoneNumber : string;
     description : string;
     status : string;
+    createdAt : string;
 }
+

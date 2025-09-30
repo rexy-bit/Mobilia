@@ -24,6 +24,7 @@ const AdminHeader = () => {
                 <Link to="/admin/vehicules" className="linkNav">Vehicules</Link>
                 <Link to="/admin/reservations" className="linkNav">Reservations</Link>
                 <Link to="/admin/requests" className="linkNav">Requests</Link>
+                <Link to="/admin/users" className="linkNav">Users</Link>
                 <Link to="/admin/account" className="linkNav"><i className="fa-solid fa-user mr-1"></i> My Account</Link>
             </nav>
 
@@ -36,6 +37,7 @@ const AdminHeader = () => {
                 <Link to="/admin/vehicules" className="linkNav" onClick={()=>setShowNavAdmin(false)}>Vehicules</Link>
                 <Link to="/admin/reservations" className="linkNav" onClick={()=>setShowNavAdmin(false)}>Reservations</Link>
                 <Link to="/admin/requests" className="linkNav" onClick={()=>setShowNavAdmin(false)}>Requests</Link>
+                <Link to="/admin/users" className="linkNav" onClick={()=>setShowNavAdmin(false)}><i className="fa-solid fa-user mr-1"></i> Users</Link>
                 <Link to="/admin/account" className="linkNav" onClick={()=>setShowNavAdmin(false)}><i className="fa-solid fa-user mr-1"></i> My Account</Link>
 
                  <div className="absolute top-2 right-2 text-[1.2em] font-bold cursor-pointer transition-opacity duration-200 hover:opacity-80 active:opacity-60" onClick={()=>setShowNavAdmin(false)}>

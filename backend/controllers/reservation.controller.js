@@ -255,3 +255,68 @@ export const updateReservation = async(req , res , next) => {
         next(err);
     }
 }
+
+
+export const searchReservation = async(req , res , next) => {
+
+    try{
+
+         const {search} = req.body;
+
+         if(!search || search.trim() === ""){
+            return res.status(400).json({
+                success : false,
+                message : "Invalid search"
+            });
+         }
+
+         const regex = new RegExp(search, "i");
+
+         const query = [
+            {vehiculeName : regex},
+            {userName : regex},
+            {phoneNumber : regex},
+            {phoneNumber : regex},
+            {status : regex}
+         ]
+
+          if (mongoose.Types.ObjectId.isValid(search)) {
+            query.push({ userId: search });
+          }
+
+           if (mongoose.Types.ObjectId.isValid(search)) {
+            query.push({ vehiculeId: search });
+          }
+
+
+
+        const searchData = await Reservation.find({ $or: query });
+
+        res.status(200).json({
+            success : true,
+            message : "Search Data found",
+            data : searchData
+        });
+
+        }catch(err){
+           next(err);
+        }
+
+}
+
+
+export const unCheckedReservation = async(req , res , next) => {
+
+    try{
+
+        const unChecked = await Reservation.find({status : "pending"});
+
+        return res.status(200).json({
+            success: true,
+            message : "Unchecked Reservations fetched",
+            data : unChecked
+        });
+    }catch(err){
+        next(err);
+    }
+}

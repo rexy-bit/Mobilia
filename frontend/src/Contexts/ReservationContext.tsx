@@ -15,6 +15,9 @@ interface ReservationContextType{
     getAllReservations : () => Promise<void>
     allReservations : Reservation[];
     updateReservationStatus : (status : string, reservationId : string)=>Promise<void>
+    searchReservations : Reservation[] | null;
+    searchReservation : (search : string)=> Promise<void>
+    unCheckedReservations : Reservation[];
 }
 
 const ReservationContext = createContext<ReservationContextType | null>(null);
@@ -29,6 +32,9 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
 
     const [reservations, setReservations] = useState<Reservation[]>([]);
     const [allReservations, setAllReservations] = useState<Reservation[]>([]);
+
+    const [searchReservations, setSearchReservations] = useState<Reservation[] | null>(null);
+    const [unCheckedReservations, setUnCheckedReservations] = useState<Reservation[]>([]);
 
     const addReservation = async(reservation : Reservation) => {
 
@@ -144,8 +150,7 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
             setError(null);
 
             setAllReservations(data.data);
-            console.log(data.data);
-            console.log('All reservations : ', allReservations);
+           
 
         }catch(err){
             console.error(err);
@@ -183,6 +188,65 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
     }
 
 
+    const searchReservation = async(search : string) => {
+
+        setLoadingReservations(true);
+
+        try{
+
+            const res = await apiClient(`http://localhost:5000/api/v1/reservations/search`, {
+                method : 'POST',
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify({search})
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                  console.error(data.message || data.error || "Error in updating user");
+                return;
+            }
+
+            setSearchReservations(data.data);
+
+        }catch(err){
+            console.error(err);
+        }finally{
+            setLoadingReservations(false);
+        }
+    }
+
+
+    const getunCheckedReservations = async() => {
+ 
+        try{
+            const res = await apiClient('http://localhost:5000/api/v1/reservations/unChecked', {
+                method : "GET"
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                                setError(data.error || data.message || "Error in getting all reservations");
+                console.log(data.error || data.message || "Error in getting all reservations");
+                return;
+            }
+
+            setError(null);
+
+            setUnCheckedReservations(data.data);
+        }catch(err){
+            console.error(err);
+        }
+
+
+    }
+
+    useEffect(()=>{
+        getunCheckedReservations();
+    }, []);
     useEffect(()=>{
         if(currentUser?.role === "admin"){
             getAllReservations();
@@ -196,7 +260,7 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
 
 
     return(
-        <ReservationContext.Provider value={{addReservation, error, reservations, getReservations, cancelReservation, loadingReservations, getAllReservations, allReservations, updateReservationStatus}}>
+        <ReservationContext.Provider value={{addReservation, error, reservations, getReservations, cancelReservation, loadingReservations, getAllReservations, allReservations, updateReservationStatus, searchReservation, searchReservations, unCheckedReservations}}>
             {children}
         </ReservationContext.Provider>
     )

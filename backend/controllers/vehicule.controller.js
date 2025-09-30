@@ -326,3 +326,20 @@ export const addVehicule = async(req , res , next) => {
         next(err);
     }
 }
+
+
+export const rentedCars = async(req , res , next) => {
+
+    try{
+
+        const vehicules = await Vehicule.find({available : false});
+
+        return res.status(200).json({
+            success : true,
+            message : "Rented vehicules fetched successfully",
+            data : vehicules
+        });
+    }catch(err){
+        next(err);
+    }
+}

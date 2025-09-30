@@ -25,6 +25,7 @@ import AdminVehicules from './AdminPages/AdminVehicules'
 import Add from './AdminPages/Add'
 import Update from './AdminPages/Update'
 import { UsersContextProvider } from './Contexts/UsersContext'
+import AdminUsers from './AdminPages/AdminUsers'
 
 function App() {
 
@@ -110,6 +111,10 @@ function App() {
 
            <Route path='vehicules' element={
             <AdminVehicules/>
+           }/>
+
+           <Route path='users' element={
+            <AdminUsers/>
            }/>
 
            <Route path='account' element={
