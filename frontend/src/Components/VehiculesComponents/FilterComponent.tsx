@@ -18,8 +18,8 @@ const FilterComponent = () => {
     return(
         <div className="flex flex-col items-center mt-7 gap-5">
             <div className="flex flex-col gap-5">
-            <div className="flex flex-row items-center justify-center gap-5 max-[600px]:flex-col max-[600px]:items-baseline">
-                <div className="flex flex-row justify-center items-center gap-1">
+            <div className="flex flex-row items-center justify-center gap-5 max-[600px]:flex-col max-[600px]:items-baseline max-[600px]:w-[300px]">
+                <div className="flex flex-row justify-center items-center gap-1 max-[600px]:justify-between max-[600px]:w-full">
                     <p className="font-bold text-[15px]">Category:</p>
                 <select 
                 name="category" 
@@ -38,7 +38,7 @@ const FilterComponent = () => {
                 </div>
 
 
-                <div className="flex flex-row items-center justify-center gap-1">
+                <div className="flex flex-row items-center justify-center gap-1 max-[600px]:justify-between max-[600px]:w-full">
                     <p className="font-bold text-[15px]">Seats:</p>
                 <select 
                 name="seats" 
@@ -59,7 +59,7 @@ const FilterComponent = () => {
             </div>
 
             <div className="flex flex-row items-center justify-center gap-5 max-[600px]:flex-col max-[600px]:items-baseline">
-                <div  className="flex flex-row items-center justify-center gap-1">
+                <div  className="flex flex-row items-center justify-center gap-1 max-[600px]:justify-between max-[600px]:w-full">
                     <p className="font-bold text-[15px]">Transmission:</p>
                 <select 
                 name="transmission" 
@@ -75,7 +75,7 @@ const FilterComponent = () => {
                 </div>
 
 
-                <div className="flex flex-row items-center justify-center gap-1">
+                <div className="flex flex-row items-center justify-center gap-1 max-[600px]:justify-between max-[600px]:w-full">
                     <p className="font-bold text-[15px]">Fuel Type:</p>
                 <select 
                 name="fuelType" 

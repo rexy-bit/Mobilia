@@ -9,6 +9,7 @@ const AdminReservationCard = ({reservation} : {reservation : Reservation}) => {
     const [update, setUpdate] = useState<boolean>(false);
     const [status, setStatus] = useState<string>(reservation.status);
     const {updateReservationStatus} = useReservationContext();
+    
 
     return(
         <div className="flex flex-col gap-1 bg-gray-200 p-5 w-[300px] border-3 border-orange-600 rounded-xl transition-transform duration-300 hover:scale-x-105">

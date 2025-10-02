@@ -146,7 +146,7 @@ export const cancelReservation = async(req , res , next) => {
         reservation.status = "cancelled";
         vehicule.available = true;
 
-        await reservation.save();
+        await reservation.save({ validateModifiedOnly: true });
 
         await vehicule.save();
 

@@ -35,7 +35,7 @@ const AdminUsers = () => {
                 type="search" 
                 name="search"
                  placeholder="user name, userId,role,email..."
-                                   className="w-[500px] border border-gray-400 px-3 h-[40px] rounded-3xl p-3 pr-17 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-100 max-[550px]:w-[300px]"
+                 className="w-[500px] border border-gray-400 px-3 h-[40px] rounded-3xl p-3 pr-17 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-100 max-[550px]:w-[300px]"
                 />
 
                    <button type="submit" className="absolute right-3 top-1/2 transform -translate-y-1/2  text-white cursor-pointer transiton-opacity duration-200 hover:opacity-70 active:opacity-50"><i className="fa-solid fa-magnifying-glass text-orange-600 text-[1.2em]"></i></button>
