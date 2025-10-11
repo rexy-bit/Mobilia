@@ -1,6 +1,8 @@
 import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import About from "../Components/HomeComponents/About";
+import Services from "../Components/HomeComponents/Services";
+import Testimonials from "../Components/HomeComponents/Testimonials";
 
 
 
@@ -39,7 +41,9 @@ const Home = () => {
                 </div>
            
               <About/>
-             
+              <Services/>
+               <Testimonials/>
+
         </section>
     );
 }

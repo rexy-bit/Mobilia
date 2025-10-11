@@ -171,6 +171,7 @@ export const RequestProvider = ({children} : {children : React.ReactNode}) => {
     }
 
     useEffect(()=>{
+        if(!currentUser || currentUser.role !== "admin") return;
         getuncheckeRequests();
     }, []);
 

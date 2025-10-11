@@ -33,6 +33,8 @@ export const UsersContextProvider = ({children} : {children : React.ReactNode}) 
 
     const getProfile = async() => {
 
+        if(!currentUser) return;
+
         try{
         const res = await apiClient('http://localhost:5000/api/v1/users/me', {
             method : "GET"

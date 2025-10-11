@@ -40,7 +40,7 @@ const Update = () => {
 
         e.preventDefault();
 
-        if(!vehiculeDetails?.brand || !vehiculeDetails?.model || !vehiculeDetails?.category || vehiculeDetails?.priceDay === undefined || !vehiculeDetails?.available || !vehiculeDetails?.fuelType || vehiculeDetails?.seats === undefined || !vehiculeDetails?.transmission || vehiculeDetails?.year === undefined || !vehiculeDetails?.description){
+        if(!vehiculeDetails?.brand || !vehiculeDetails?.model || !vehiculeDetails?.category || vehiculeDetails?.priceDay === undefined || vehiculeDetails?.available === undefined || !vehiculeDetails?.fuelType || vehiculeDetails?.seats === undefined || !vehiculeDetails?.transmission || vehiculeDetails?.year === undefined || !vehiculeDetails?.description){
             return;
         }
 
@@ -63,6 +63,7 @@ const Update = () => {
             });
 
             await updateVehicule(vehiculeDetails._id, formData);
+            navigate("/admin/vehicules");
     }
 
     
@@ -273,7 +274,9 @@ const Update = () => {
     </div>
 
 
-                        <button type="submit" className="w-full bg-orange-600 text-white font-bold py-2 rounded-[5px] cursor-pointer transition-opacity duration-200 hover:opacity-70 active:opacity-50">Submit</button>
+                        <button type="submit" className="w-full bg-orange-600 text-white font-bold py-2 rounded-[5px] cursor-pointer transition-opacity duration-200 hover:opacity-70 active:opacity-50">
+                          Submit
+                        </button>
                   </form>
                 </div>
             }
@@ -282,6 +285,7 @@ const Update = () => {
             className="bg-white text-black font-bold absolute top-2 left-2 px-3 py-1 border-2 border-black rounded-full cursor-pointer transition-all duration-300 hover:bg-gray-100 active:bg-gray-200"
             onClick={()=>navigate(-1)}
             >&#8592; Back</button>
+
         </section>
     )
 }

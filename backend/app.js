@@ -23,7 +23,7 @@ app.use(express.urlencoded({extended : true}));
 
 
 app.use('/api/v1/auth', authRouter);
-app.use('/api/V1/users', userRouter);
+app.use('/api/v1/users', userRouter);
 app.use('/api/v1/vehicules', vehiculeRouter);
 app.use('/api/v1/reservations', reservationRouter);
 app.use('/api/v1/requests', requestRouter);

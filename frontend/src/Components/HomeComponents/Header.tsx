@@ -1,6 +1,6 @@
 
 import { memo, useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 const Header = () => {
 
@@ -13,16 +13,18 @@ const Header = () => {
     useEffect(()=>{
         localStorage.setItem('showNav', JSON.stringify(showNav));
     }, [showNav]);
+
+    const loaction = useLocation();
     return(
         <header className="flex flex-row justify-between items-center bg-black top-0 fixed w-full h-[50px] text-white px-10 max-[750px]:px-15 z-50">
             <h1 className="text-[1.5em] font-black font-sans"><Link to="/">Mobilia</Link></h1>
 
             <nav className="flex flex-row justify-center items-center gap-5 max-[750px]:hidden">
-                <Link to="/" className="linkNav">Home</Link>
-                <Link to="/vehicules" className="linkNav">Vehicules</Link>
-                <Link to="/reservations" className="linkNav">My Reservations</Link>
-                <Link to="/guide" className="linkNav">Booking Guide</Link>
-                <Link to="/account" className="linkNav"><i className="fa-solid fa-user mr-1"></i> My Account</Link>
+                <Link to="/" className="linkNav"  style={{fontWeight : loaction.pathname === "/" ? "900" : "400"}}>Home</Link>
+                <Link to="/vehicules" className="linkNav"  style={{fontWeight : loaction.pathname === "/vehicules" ? "900" : "400"}}>Vehicules</Link>
+                <Link to="/reservations" className="linkNav"  style={{fontWeight : location.pathname === "/reservations" ? "900" : "400"}}>My Reservations</Link>
+                <Link to="/guide" className="linkNav" style={{fontWeight : location.pathname === "/guide" ? "900" : "400"}}>Booking Guide</Link>
+                <Link to="/account" className="linkNav" style={{fontWeight : location.pathname === "/account" ? "900" : "400"}}><i className="fa-solid fa-user mr-1"></i> My Account</Link>
             </nav>
 
             <div onClick={()=>setShowNav(prev => !prev)} className="hidden max-[750px]:block text-[2em] font-black cursor-pointer transition-opacity duration-200 hover:opacity-70 active:opacity-50">&#9776;</div>

@@ -245,6 +245,7 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
     }
 
     useEffect(()=>{
+        if(!currentUser || currentUser.role !== "admin") return;
         getunCheckedReservations();
     }, []);
     useEffect(()=>{

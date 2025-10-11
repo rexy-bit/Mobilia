@@ -20,7 +20,7 @@ export const apiClient = async(url : string, options : RequestInit = {}) => {
         });
 
         if(!refreshRes.ok){
-            window.location.href = "/login";
+            window.location.href = "/account";
             throw new Error("Unable to refresh token");
         }
 
@@ -35,4 +35,4 @@ export const apiClient = async(url : string, options : RequestInit = {}) => {
         throw err;
     }
 }
-
+ 
