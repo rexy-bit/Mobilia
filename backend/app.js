@@ -13,25 +13,14 @@ import requestRouter from "./routes/request.routes.js";
 const app = express();
 
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://mobilia-5358.vercel.app"
-];
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", allowedOrigins.includes(req.headers.origin) ? req.headers.origin : "*");
-  res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(204);
-  }
-  next();
-});
-
 app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
+  origin: [
+    "http://localhost:5173",
+    "https://mobilia-5358.vercel.app"   // <-- vérifie bien ce domaine !
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
 }));
 
 app.use(cookieParser());
