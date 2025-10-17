@@ -13,7 +13,7 @@ import requestRouter from "./routes/request.routes.js";
 const app = express();
 
 app.use(cors({
-    origin : ["http://localhost:5173"],
+    origin : ["http://localhost:5173", "https://mobilia-5358.vercel.app"],
     credentials : true
 }));
 
