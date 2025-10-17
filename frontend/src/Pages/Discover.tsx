@@ -42,7 +42,7 @@ const Discover = () => {
         <section className="min-h-screen flex flex-col items-center w-full relative">
 
            {loadingVehicules ?
-                <div className="mt-20">
+                <div className="mt-20 mb-20">
                   <i className="fa-solid fa-car-side fa-spin text-[2.5em]"></i>
                </div>
                : 

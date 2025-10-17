@@ -58,7 +58,7 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
 
         try{
 
-        const res = await fetch('http://localhost:5000/api/v1/auth/sign-up', {
+        const res = await fetch('https://mobilia-xzo6.onrender.com/api/v1/auth/sign-up', {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
@@ -87,7 +87,7 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
 
            try{
 
-              const res = await fetch("http://localhost:5000/api/v1/auth/sign-in", {
+              const res = await fetch("https://mobilia-xzo6.onrender.com/api/v1/auth/sign-in", {
                 method : "POST",
                 headers : {
                   "Content-Type" : "application/json"
@@ -116,7 +116,7 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
 
         try{
 
-            const res = await fetch("http://localhost:5000/api/v1/auth/sign-out", {
+            const res = await fetch("https://mobilia-xzo6.onrender.com/api/v1/auth/sign-out", {
                 method : 'POST',
                 headers : {
                     "Content-Type" : "application/json"

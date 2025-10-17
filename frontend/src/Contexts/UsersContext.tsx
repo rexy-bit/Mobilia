@@ -36,7 +36,7 @@ export const UsersContextProvider = ({children} : {children : React.ReactNode}) 
         if(!currentUser) return;
 
         try{
-        const res = await apiClient('http://localhost:5000/api/v1/users/me', {
+        const res = await apiClient('https://mobilia-xzo6.onrender.com/api/v1/users/me', {
             method : "GET"
         });
 
@@ -64,7 +64,7 @@ export const UsersContextProvider = ({children} : {children : React.ReactNode}) 
 
         try{
 
-            const res = await apiClient('http://localhost:5000/api/v1/users/all', {
+            const res = await apiClient('https://mobilia-xzo6.onrender.com/api/v1/users/all', {
                 method : "GET"
             });
 
@@ -94,7 +94,7 @@ export const UsersContextProvider = ({children} : {children : React.ReactNode}) 
         
         try{
 
-            const res = await apiClient(`http://localhost:5000/api/v1/users/delete/${userId}`, {
+            const res = await apiClient(`https://mobilia-xzo6.onrender.com/api/v1/users/delete/${userId}`, {
                 method : "DELETE",
             });
 
@@ -120,7 +120,7 @@ export const UsersContextProvider = ({children} : {children : React.ReactNode}) 
 
         try{
 
-            const res = await apiClient(`http://localhost:5000/api/v1/users/update/${userId}`, {
+            const res = await apiClient(`https://mobilia-xzo6.onrender.com/api/v1/users/update/${userId}`, {
                 method : 'PUT',
                 headers: {
                   "Content-Type" : "application/json"
@@ -145,7 +145,7 @@ export const UsersContextProvider = ({children} : {children : React.ReactNode}) 
 
         try{
 
-            const res = await apiClient("http://localhost:5000/api/v1/users/search", {
+            const res = await apiClient("https://mobilia-xzo6.onrender.com/api/v1/users/search", {
                 method :"POST",
                 headers : {
                     "Content-Type" : "application/json"

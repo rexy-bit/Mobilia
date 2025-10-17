@@ -35,7 +35,7 @@ export const RequestProvider = ({children} : {children : React.ReactNode}) => {
 
         try{
 
-            const res = await fetch(`http://localhost:5000/api/v1/requests/add`, {
+            const res = await fetch(`https://mobilia-xzo6.onrender.com/api/v1/requests/add`, {
                 method : 'POST',
                 headers : {
                     "Content-Type" : "application/json"
@@ -71,7 +71,7 @@ export const RequestProvider = ({children} : {children : React.ReactNode}) => {
         if(!currentUser || currentUser.role !== "admin") return;
 
         try{
-            const res = await apiClient("http://localhost:5000/api/v1/requests/", {
+            const res = await apiClient("https://mobilia-xzo6.onrender.com/api/v1/requests/", {
                 method : "GET"
             });
 
@@ -101,7 +101,7 @@ export const RequestProvider = ({children} : {children : React.ReactNode}) => {
         if(!currentUser || currentUser.role !== "admin") return;
 
         try{
-            const res = await apiClient(`http://localhost:5000/api/v1/requests/${requestId}`, {
+            const res = await apiClient(`https://mobilia-xzo6.onrender.com/api/v1/requests/${requestId}`, {
                 method : "PUT",
                 headers : {
                     "Content-Type" : "application/json",
@@ -128,7 +128,7 @@ export const RequestProvider = ({children} : {children : React.ReactNode}) => {
 
         try{
 
-            const res = await apiClient("http://localhost:5000/api/v1/requests/search", {
+            const res = await apiClient("https://mobilia-xzo6.onrender.com/api/v1/requests/search", {
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json"
@@ -153,7 +153,7 @@ export const RequestProvider = ({children} : {children : React.ReactNode}) => {
     const getuncheckeRequests = async() => {
 
         try{
-        const res = await apiClient("http://localhost:5000/api/v1/requests/unChecked", {
+        const res = await apiClient("https://mobilia-xzo6.onrender.com/api/v1/requests/unChecked", {
             method : "GET"
         });
 

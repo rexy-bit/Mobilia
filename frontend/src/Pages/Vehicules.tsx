@@ -17,7 +17,7 @@ const Vehicules = () => {
            <FilterComponent/>  
 
            {loadingVehicules ?
-               <div className="mt-10">
+               <div className="mt-10 mb-15">
                   <i className="fa-solid fa-car-side fa-spin text-[2.5em]"></i>
                </div>
                :

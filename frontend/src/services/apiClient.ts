@@ -14,7 +14,7 @@ export const apiClient = async(url : string, options : RequestInit = {}) => {
             return res;
         }
 
-        const refreshRes = await fetch("http://localhost:5000/api/v1/auth/refresh-token", {
+        const refreshRes = await fetch("https://mobilia-xzo6.onrender.com/api/v1/auth/refresh-token", {
             method : 'POST',
             credentials : "include"
         });
