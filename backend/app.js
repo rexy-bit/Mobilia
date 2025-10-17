@@ -16,7 +16,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://mobilia-5358.vercel.app"   // <-- vérifie bien ce domaine !
+    "https://mobilia-5358.vercel.app" , "https://mobilia-1.onrender.com"  // <-- vérifie bien ce domaine !
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
