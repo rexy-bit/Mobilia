@@ -1,6 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useVehiculesContext } from "../Contexts/VehiculesContext"
 import { memo, useEffect, useState } from "react";
+import GeneralFooter from "../Components/HomeComponents/GeneralFooter";
+import Copyright from "../Components/HomeComponents/Copyright";
 
 
 const Discover = () => {
@@ -118,7 +120,9 @@ const Discover = () => {
             className="bg-white text-black font-bold absolute top-2 left-2 px-3 py-1 border-2 border-black rounded-full cursor-pointer transition-all duration-300 hover:bg-gray-100 active:bg-gray-200"
             onClick={()=>navigate(-1)}
             >&#8592; Back</button>
-
+ 
+               <GeneralFooter/>
+               <Copyright/>
         </section>
     )
 }

@@ -2,6 +2,8 @@ import { memo, useEffect, useState } from "react"
 import { useAuthContext } from "../Contexts/AuthContext";
 import SignIn from "../Components/AccountComponents/SignIn";
 import SignUp from "../Components/AccountComponents/SignUp";
+import GeneralFooter from "../Components/HomeComponents/GeneralFooter";
+import Copyright from "../Components/HomeComponents/Copyright";
 
 
 const Account = () => {
@@ -19,6 +21,7 @@ const Account = () => {
     }, [activeForm]);
 
     return(
+        <>
         <section className="min-h-screen flex flex-col items-center">
            
            {currentUser === null
@@ -65,7 +68,18 @@ const Account = () => {
 
                 </div>
            }
+
+     
+        
+           
+           <div className="w-full mt-50">
+                      <GeneralFooter/>
+           </div>
+           <Copyright/>
+           
         </section>
+        
+        </>
     )
 }
 

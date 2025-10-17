@@ -4,7 +4,7 @@ import  { memo } from "react"
 const About = () => {
 
     return(
-        <div className="flex flex-col w-full items-center">
+        <div className="flex flex-col w-full items-center" id="about">
             <h1 className="text-[3em] font-black mt-10">About Us</h1>
 
             <div className="flex flex-row justify-center items-center w-full mt-10 gap-50 max-[1000px]:gap-30 max-[950px]:gap-20 max-[700px]:flex-col max-[700px]:gap-10">

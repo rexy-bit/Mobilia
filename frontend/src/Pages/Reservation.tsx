@@ -3,6 +3,8 @@ import { useVehiculesContext } from "../Contexts/VehiculesContext";
 import { memo, useEffect, useState } from "react";
 import { useAuthContext } from "../Contexts/AuthContext";
 import { useReservationContext } from "../Contexts/ReservationContext";
+import GeneralFooter from "../Components/HomeComponents/GeneralFooter";
+import Copyright from "../Components/HomeComponents/Copyright";
 
 
 const Reservation = () => {
@@ -222,7 +224,8 @@ const Reservation = () => {
                  </div>
             }
             
-
+            <GeneralFooter/>
+            <Copyright/>
 
         </section>
     )

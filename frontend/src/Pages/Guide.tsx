@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import RequestForm from "../Components/ReservationComponents/RequestForm";
 import FindUs from "../Components/ReservationComponents/FindUs";
+import GeneralFooter from "../Components/HomeComponents/GeneralFooter";
+import Copyright from "../Components/HomeComponents/Copyright";
 
 
 const steps = [
@@ -147,6 +149,8 @@ const Guide = () =>  {
 
             <RequestForm/>
             <FindUs/>
+            <GeneralFooter/>
+            <Copyright/>
         </section>
     )
 }

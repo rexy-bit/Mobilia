@@ -21,7 +21,7 @@ const Testimonials = () => {
 
 
     return(
-        <div className="w-full bg-white py-10 flex flex-col justify-center items-center">
+        <div className="w-full bg-white py-10 flex flex-col justify-center items-center" id="testimonials">
 
             <h1 className="text-[2.5em] font-black">Testimonials</h1>
 

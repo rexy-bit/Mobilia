@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import About from "../Components/HomeComponents/About";
 import Services from "../Components/HomeComponents/Services";
 import Testimonials from "../Components/HomeComponents/Testimonials";
+import GeneralFooter from "../Components/HomeComponents/GeneralFooter";
+import Faq from "../Components/HomeComponents/Faq";
+import Footer from "../Components/HomeComponents/Footer";
+import Copyright from "../Components/HomeComponents/Copyright";
 
 
 
@@ -43,6 +47,10 @@ const Home = () => {
               <About/>
               <Services/>
                <Testimonials/>
+               <GeneralFooter/>
+               <Faq/>
+               <Footer/>
+               <Copyright/>
 
         </section>
     );

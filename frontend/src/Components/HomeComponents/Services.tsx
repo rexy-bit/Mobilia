@@ -31,10 +31,10 @@ const Services = () => {
 
     
     return(
-        <section className="flex flex-col items-center py-10 bg-orange-600 w-full">
+        <section className="flex flex-col items-center py-10 bg-orange-600 w-full" id="services">
             <h1 className="text-white font-bold text-[3em] font-sans">Our Services</h1>
 
-             <div className="flex flex-wrap gap-10 items-center mt-10 mb-5 justify-center">
+             <div className="flex flex-wrap gap-10 items-center mt-10 mb-5 justify-center px-10">
                 {services.map((s)=>{
                     return(
                         <div key={s.name} className="w-[250px] p-5 bg-gray-50 rounded-lg border-3 border-black flex flex-col items-center h-[300px] relative cursor-pointer transition-transform duration-300 hover:scale-105">
@@ -48,7 +48,7 @@ const Services = () => {
                 })}
              </div>
 
-             <div className="flex flex-row justify-center items-center gap-5 mt-7 mb-5">
+             <div className="flex flex-row justify-center items-center gap-5 mt-7 mb-5 max-[510px]:flex-col">
                 <button className="px-5 bg-gray-100 font-bold text-[15px] py-2 rounded-lg cursor-pointer transition-all duration-200 hover:bg-gray-300 active:scale-95" onClick={()=>navigate("/vehicules")}>
                     View Available Vehicules
                 </button>

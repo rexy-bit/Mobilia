@@ -3,6 +3,8 @@ import { useReservationContext } from "../Contexts/ReservationContext";
 import ReservationCard from "../Components/ReservationComponents/ReservationCard";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../Contexts/AuthContext";
+import GeneralFooter from "../Components/HomeComponents/GeneralFooter";
+import Copyright from "../Components/HomeComponents/Copyright";
 
 
 
@@ -53,7 +55,7 @@ const Reservations = () => {
                 </div>
                 : 
                   reservations.length === 0 ?
-                    <div className="flex flex-col items-center mt-10">
+                    <div className="flex flex-col items-center mt-10 mb-15">
                         <p className="font-bold text-[1.7em] text-center">You have no reservations</p>
 
                         <button className="bg-orange-600 text-white py-2 px-3 rounded-full text-[15px] font-[600] mt-5 transition-opacity duration-200 hover:opacity-70 active:opacity-50 cursor-pointer"
@@ -83,7 +85,9 @@ const Reservations = () => {
              </>
 
             }
-
+            
+            <GeneralFooter/>
+            <Copyright/>
         </section>
     )
 

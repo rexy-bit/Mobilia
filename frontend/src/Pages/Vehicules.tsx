@@ -2,6 +2,8 @@ import { memo } from "react"
 import { useVehiculesContext } from "../Contexts/VehiculesContext";
 import VehiculeCard from "../Components/VehiculesComponents/VehiculeCard";
 import FilterComponent from "../Components/VehiculesComponents/FilterComponent";
+import GeneralFooter from "../Components/HomeComponents/GeneralFooter";
+import Copyright from "../Components/HomeComponents/Copyright";
 
 
 const Vehicules = () => {
@@ -21,7 +23,7 @@ const Vehicules = () => {
                :
               
                 vehicules.length === 0 ?
-                 <div className="flex flex-col items-center mt-15">
+                 <div className="flex flex-col items-center mt-15 mb-15">
                     <i className="fa-solid fa-calendar-xmark text-[4em] text-orange-500"></i>
                     <p className="mt-3 font-bold text-center">There are no vehicles available based on your criteria.</p>
                     <p className="text-gray-700 text-center">Please adjust the selected filters.</p>
@@ -39,6 +41,8 @@ const Vehicules = () => {
              </div>
              } 
 
+               <GeneralFooter/>
+               <Copyright/>
         </section>
     )
 }
