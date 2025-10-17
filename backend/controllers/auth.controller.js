@@ -56,14 +56,14 @@ export const signUp = async(req , res , next) => {
            res.cookie("accessToken", accessToken, {
         httpOnly: true,           
         secure: process.env.NODE_ENV === "production",
-        sameSite: "none",
+        sameSite: "lax",
         maxAge: 15 * 60 * 1000    
     });
 
        res.cookie("refreshToken", refreshToken, {
         httpOnly : true,
         secure : process.env.NODE_ENV === "production",
-        sameSite : "none",
+        sameSite : "lax",
         maxAge : 7*24*60*60*1000
        });
 
@@ -136,14 +136,14 @@ export const signIn = async(req, res, next) => {
        res.cookie("accessToken", accessToken, {
         httpOnly : true,
                 secure : process.env.NODE_ENV === "production",
-        sameSite : "none",
+        sameSite : "lax",
         maxAge : 15*60*1000
        });
 
        res.cookie("refreshToken", refreshToken, {
         httpOnly : true,
         secure: process.env.NODE_ENV === "production",
-        sameSite : "none",
+        sameSite : "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000
        })
 
@@ -173,7 +173,7 @@ export const signOut = async(req, res, next) => {
         res.cookie("accessToken", "", {
             httpOnly : true,
             secure : process.env.NODE_ENV === "production",
-            sameSite : "none",
+            sameSite : "lax",
             expires : new Date(0)
         }
         );
@@ -181,7 +181,7 @@ export const signOut = async(req, res, next) => {
         res.cookie("refreshToken", "", {
             httpOnly : true,
             secure : process.env.NODE_ENV === "production",
-            sameSite : "none",
+            sameSite : "lax",
             expires : new Date(0)
         });
 
@@ -223,7 +223,7 @@ export const refreshTokenFunction = async(req , res , next) => {
         res.cookie("accessToken", newAccessToken, {
             httpOnly : true,
             secure: process.env.NODE_ENV === "production",
-            sameSite : "none",
+            sameSite : "lax",
             maxAge: 15 * 60 * 1000
         });
 
