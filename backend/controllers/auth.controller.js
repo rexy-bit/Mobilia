@@ -3,6 +3,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
 import { ACCESS_TOKEN_EXPIRATION, ACCESS_TOKEN_SECRET , REFRESH_TOKEN_EXPIRATION, REFRESH_TOKEN_SECRET, NODE_ENV} from "../config/env.js";
+import { truncateSync } from "node:fs";
 
 
 
@@ -55,15 +56,15 @@ export const signUp = async(req , res , next) => {
 
            res.cookie("accessToken", accessToken, {
         httpOnly: true,           
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        secure: true,
+        sameSite: "none",
         maxAge: 15 * 60 * 1000    
     });
 
        res.cookie("refreshToken", refreshToken, {
         httpOnly : true,
-        secure : process.env.NODE_ENV === "production",
-        sameSite : "lax",
+        secure : true,
+        sameSite : "none",
         maxAge : 7*24*60*60*1000
        });
 
@@ -135,15 +136,15 @@ export const signIn = async(req, res, next) => {
 
        res.cookie("accessToken", accessToken, {
         httpOnly : true,
-                secure : process.env.NODE_ENV === "production",
-        sameSite : "lax",
+                secure : true,
+        sameSite : "none",
         maxAge : 15*60*1000
        });
 
        res.cookie("refreshToken", refreshToken, {
         httpOnly : true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite : "lax",
+        secure: true,
+        sameSite : "none",
         maxAge: 7 * 24 * 60 * 60 * 1000
        })
 
@@ -172,16 +173,16 @@ export const signOut = async(req, res, next) => {
 
         res.cookie("accessToken", "", {
             httpOnly : true,
-            secure : process.env.NODE_ENV === "production",
-            sameSite : "lax",
+            secure : true,
+            sameSite : "none",
             expires : new Date(0)
         }
         );
 
         res.cookie("refreshToken", "", {
             httpOnly : true,
-            secure : process.env.NODE_ENV === "production",
-            sameSite : "lax",
+            secure : true,
+            sameSite : "none",
             expires : new Date(0)
         });
 
@@ -222,8 +223,8 @@ export const refreshTokenFunction = async(req , res , next) => {
 
         res.cookie("accessToken", newAccessToken, {
             httpOnly : true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite : "lax",
+            secure: true,
+            sameSite : "none",
             maxAge: 15 * 60 * 1000
         });
 
