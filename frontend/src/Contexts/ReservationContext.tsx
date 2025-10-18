@@ -38,6 +38,8 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
 
     const addReservation = async(reservation : Reservation) => {
 
+        if(!currentUser) return;
+
         setLoadingReservations(true);
         try{
 
@@ -220,6 +222,8 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
 
 
     const getunCheckedReservations = async() => {
+
+        if(!currentUser) return;
  
         try{
             const res = await apiClient('https://mobilia-xzo6.onrender.com/api/v1/reservations/unChecked', {
@@ -256,7 +260,9 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
     } , []);
 
     useEffect(()=>{
+        if(currentUser){
         getReservations()
+        }
     }, []);
 
 
