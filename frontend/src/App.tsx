@@ -26,6 +26,7 @@ import Add from './AdminPages/Add'
 import Update from './AdminPages/Update'
 import { UsersContextProvider } from './Contexts/UsersContext'
 import AdminUsers from './AdminPages/AdminUsers'
+import ScrollToTop from './ScrollToTop'
 
 function App() {
 
@@ -36,6 +37,8 @@ function App() {
       <ReservationProvider>
         <RequestProvider>
           <UsersContextProvider>
+
+            <ScrollToTop/>
         
     <Routes>
 
