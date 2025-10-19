@@ -35,7 +35,7 @@ export const RequestProvider = ({children} : {children : React.ReactNode}) => {
 
         try{
 
-            const res = await fetch(`/api/v1/requests/add`, {
+            const res = await fetch(`https://mobilia-xzo6.onrender.com/api/v1/requests/add`, {
                 method : 'POST',
                 headers : {
                     "Content-Type" : "application/json"

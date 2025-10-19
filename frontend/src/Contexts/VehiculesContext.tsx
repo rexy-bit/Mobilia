@@ -63,7 +63,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
         setLoadingVehicules(true);
         try{
             
-            const res = await fetch("/api/v1/vehicules/", {
+            const res = await fetch("https://mobilia-xzo6.onrender.com/api/v1/vehicules/", {
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json"
@@ -95,7 +95,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
         try{
             setLoadingVehicules(true);
 
-            const res = await fetch(`/api/v1/vehicules/vehicule/${id}`, {
+            const res = await fetch(`https://mobilia-xzo6.onrender.com/api/v1/vehicules/vehicule/${id}`, {
                 method : "GET",
                 headers : {
                     "Content-Type" : "application/json"
