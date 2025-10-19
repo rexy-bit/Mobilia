@@ -63,7 +63,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
         setLoadingVehicules(true);
         try{
             
-            const res = await fetch("https://mobilia-xzo6.onrender.com/api/v1/vehicules/", {
+            const res = await fetch("/api/v1/vehicules/", {
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json"
@@ -95,7 +95,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
         try{
             setLoadingVehicules(true);
 
-            const res = await fetch(`https://mobilia-xzo6.onrender.com/api/v1/vehicules/vehicule/${id}`, {
+            const res = await fetch(`/api/v1/vehicules/vehicule/${id}`, {
                 method : "GET",
                 headers : {
                     "Content-Type" : "application/json"
@@ -126,7 +126,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
 
         try{
             setLoadingVehicules(true);
-            const res = await apiClient(`https://mobilia-xzo6.onrender.com/api/v1/vehicules/delete/${id}`,{
+            const res = await apiClient(`/api/v1/vehicules/delete/${id}`,{
                 method : "DELETE",
                 headers : {
                     "Content-Type" : "application/json"
@@ -154,7 +154,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
 
         try{
 
-            const res = await apiClient(`https://mobilia-xzo6.onrender.com/api/v1/vehicules/update/${id}`, {
+            const res = await apiClient(`/api/v1/vehicules/update/${id}`, {
                 method : "PUT",
                 body : formData
             });
@@ -180,7 +180,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
         setLoadingVehicules(true);
         try{
 
-            const res = await apiClient('https://mobilia-xzo6.onrender.com/api/v1/vehicules/add', {
+            const res = await apiClient('/api/v1/vehicules/add', {
                 method : 'POST',
                 body : formData
             });
@@ -210,7 +210,7 @@ export const VehiculesProvider = ({children} : {children : React.ReactNode}) => 
 
         try{
 
-            const res = await apiClient("https://mobilia-xzo6.onrender.com/api/v1/vehicules/rented", {
+            const res = await apiClient("/api/v1/vehicules/rented", {
                 method : "GET"
             });
 

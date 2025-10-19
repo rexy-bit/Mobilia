@@ -43,7 +43,7 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
         setLoadingReservations(true);
         try{
 
-          const res = await apiClient("https://mobilia-xzo6.onrender.com/api/v1/reservations/add", {
+          const res = await apiClient("/api/v1/reservations/add", {
              method : 'POST',
              headers: {
                 "Content-Type" : "application/json"
@@ -78,7 +78,7 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
 
         try{
              
-            const res = await apiClient(`https://mobilia-xzo6.onrender.com/api/v1/reservations/user/${currentUser._id}`,
+            const res = await apiClient(`/api/v1/reservations/user/${currentUser._id}`,
                 {
                     method : "GET"
                 });
@@ -106,7 +106,7 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
 
         try{
 
-            const res = await apiClient(`https://mobilia-xzo6.onrender.com/api/v1/reservations/cancel/${id}`, {
+            const res = await apiClient(`/api/v1/reservations/cancel/${id}`, {
                 method : 'PUT',
                 headers : {
                     "Content-Type" : "application/json"
@@ -137,7 +137,7 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
         setLoadingReservations(true);
         try{
 
-            const res = await apiClient('https://mobilia-xzo6.onrender.com/api/v1/reservations/all', {
+            const res = await apiClient('/api/v1/reservations/all', {
                 method : "GET",
             });
         
@@ -165,7 +165,7 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
     const updateReservationStatus = async(status : string, reservationId  : string) => {
 
         try{
-            const res = await apiClient(`https://mobilia-xzo6.onrender.com/api/v1/reservations/update/${reservationId}`,{
+            const res = await apiClient(`/api/v1/reservations/update/${reservationId}`,{
                 method : "PUT",
                 headers : {
                     "Content-Type" : "application/json"
@@ -196,7 +196,7 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
 
         try{
 
-            const res = await apiClient(`https://mobilia-xzo6.onrender.com/api/v1/reservations/search`, {
+            const res = await apiClient(`/api/v1/reservations/search`, {
                 method : 'POST',
                 headers : {
                     "Content-Type" : "application/json"
@@ -226,7 +226,7 @@ export const ReservationProvider = ({children} : {children : React.ReactNode}) =
         if(!currentUser) return;
  
         try{
-            const res = await apiClient('https://mobilia-xzo6.onrender.com/api/v1/reservations/unChecked', {
+            const res = await apiClient('/api/v1/reservations/unChecked', {
                 method : "GET"
             });
 

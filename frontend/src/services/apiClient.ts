@@ -73,7 +73,7 @@ async function attemptRefresh(): Promise<boolean> {
     console.log("Attempting token refresh...");
     
     const refreshRes = await fetch(
-      "https://mobilia-xzo6.onrender.com/api/v1/auth/refresh-token", 
+      "/api/v1/auth/refresh-token", 
       {
         method: "POST",
         credentials: "include",
@@ -101,7 +101,7 @@ async function attemptRefresh(): Promise<boolean> {
 export const checkAuth = async(): Promise<boolean> => {
   try {
     const res = await fetch(
-      "https://mobilia-xzo6.onrender.com/api/v1/auth/check", 
+      "/api/v1/auth/check", 
       {
         method: "GET",
         credentials: "include"
